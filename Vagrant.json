@@ -1,0 +1,8 @@
+{
+  "Project": {
+    "name": "wp-scratch-box",
+    "vagrant_box": "ubuntu/trusty64",
+    "box_ip": "172.16.0.12",
+    "box_hostname": ""
+  }
+}

@@ -15,5 +15,7 @@ Vagrant.configure(2) do |config|
     end
     project.vm.network "private_network", ip: set['Project']['box_ip']
     project.vm.provision "shell", path: "wp-scratch-box.sh", privileged: false
+    project.vm.synced_folder "content/", "/var/www/project/public/core/wp-content/", create: true,
+      owner: "www-data", group: "www-data"
   end
 end

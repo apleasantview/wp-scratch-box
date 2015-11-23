@@ -1,5 +1,5 @@
 ## wp-scratch-box
-***v1.0.x-alpha***  
+***v1.1.x-alpha***  
 
 ### Description
 Quick Vagrant box for WordPress development, presentations, ...
@@ -12,7 +12,7 @@ Visit `http://172.16.0.12` in your browser, you should be greeted by the five mi
 
 #### Roadmap
 - Looking for contributions and input on the PHP, APACHE || `.htaccess` file and MySQL configurations.
--  Setting variables from `Vagrant.json` in `wp-scatch-box.sh` for additional installation settings. Will be toying with JQ coming weeks. 
+-  Setting variables from `Vagrant.json` in `wp-scratch-box.sh` for additional installation settings. Will be toying with JQ coming weeks. 
 - a VMWare provisioner for the `Vagranfile`.
 - Suggestions can be discussed in the issue tracker/through PR.  
 </br>
@@ -35,7 +35,8 @@ Current configuration options:
 |"box_hostname"| *unused* | (empty) |
 
 ##### Synced folder
-Vagrant will, at the first run, create a folder named `content` which is linked with `/var/www/project/public/core/wp-content` inside the VM.
+Vagrant will, on first run, create a folder named `content` which is linked with `/var/www/project/public/core/wp-content` inside the VM.  
+The Host directory will be synced to `/vagrant/` per Vagrants' defaults
 
 #### wp-scratch-box.sh
 This is the provisioning file.
@@ -80,7 +81,8 @@ The wp-config file can be overridden by placing a `site-conf.php` file in the `p
 - password: `wp`
 - database name: `wp_dummy`  
 
-These values can currently be changed in `wp-scratch-box.sh`.
+These values can currently be manually changed in `wp-scratch-box.sh`.  
+Be sure to change these values in `wp-config.php` or `site-conf.php`.
 
 ### Pre-packaged development environments (Multi-Machine)
 By leveraging Vagrant's Multi-Machine feature, re-packaged boxes from VVV, Primary Vagrant, ... can be used in **wp-scratch-box** alongside the default `Project` VM.

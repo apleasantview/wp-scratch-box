@@ -82,6 +82,33 @@ The wp-config file can be overridden by placing a `site-conf.php` file in the `p
 
 These values can currently be changed in `wp-scratch-box.sh`.
 
+### Pre-packaged development environments (Multi-Machine)
+By leveraging Vagrant's Multi-Machine feature, re-packaged boxes from VVV, Primary Vagrant, ... can be used in **wp-scratch-box** alongside the default `Project` VM.
+
+#### Usage
+In `Vagrant.json` append the following Parent Object:
+```
+{
+  "Project": {
+    ...
+  },
+  "Custom": {
+    "name": "test",
+    "vagrant_box": "ubuntu/trusty64",
+    "box_ip": "172.16.0.13",
+    "box_hostname": ""
+  }
+}
+```
+Follow with command `vagrant up`  
+
+**Notes:** 
+- All keys are required and Parent Object must be set to `"Custom"` in `Vagrant.json`.
+- The default `Project`machine will **not** start and be provisioned. You can force it to start with the command `vagrant up NAME`
+- If you run both `Project` and `Custom` setting their IP's in the same range will create a network and facilitate communications between the two machines.  
+- Synced folders for the `Custom` machine needs to be currently manually set in the `Vagrantfile` if required.
+
+***Please refer to the [Vagrant docs](https://docs.vagrantup.com/v2/multi-machine/index.html) for more info on Multi-Machine setups.***  
 <br>
 
 ### License

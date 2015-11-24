@@ -34,9 +34,11 @@ base_packages() {
   (
     cd /home/vagrant/wp-cli
     curl -O -s -S https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    curl -O -s -S https://raw.githubusercontent.com/wp-cli/wp-cli/master/utils/wp-completion.bash
     chmod +x wp-cli.phar
     sudo mv wp-cli.phar /usr/local/bin/wp
   ) &
+  printf "\n%s\n" "source /home/vagrant/wp-cli/wp-completion.bash" >> .bashrc
 }
 
 additional_repos() {

@@ -45,7 +45,7 @@ This is the provisioning file.
     - git-core
 	- jq
 	- vim
-	- wp-cli
+	- wp-cli w/ tab completions
 
 #### LAMP
 - Apache 2.4

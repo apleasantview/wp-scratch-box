@@ -3,7 +3,7 @@
 #description    :provisioning script for wp-scratch-box
 #author         :Cristovao Verstraeten
 #date           :20151120
-#version        :1.1.3-alpha
+#version        :1.1.4-alpha
 #usage          :vagrant up --provision, vagrant provision
 #notes          :
 #bash_version   :4.3.39(3)-release
@@ -118,11 +118,11 @@ wordpress() {
     sudo chown -R -f vagrant:vagrant /var/www/
     mkdir -p "/var/www/project/public"
     cd "/var/www/project/public"
+    wp core download --path="$core_directory/"
     cp /vagrant/resources/.htaccess .
     curl -O -s -S https://raw.githubusercontent.com/cristovaov/wp-sample-config/master/index.php
     curl -O -s -S https://raw.githubusercontent.com/cristovaov/wp-sample-config/master/wp-config.php
-    wp cli version
-    wp core download --path="$core_directory/"
+    wp cli version    
     wp core version --path="$core_directory/" --extra
   )
 }

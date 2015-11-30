@@ -1,5 +1,5 @@
 ## wp-scratch-box
-***v1.1.x-alpha***  
+***v2.0.x-alpha***  
 
 ### Description
 Quick Vagrant box for WordPress development, presentations, ...
@@ -66,15 +66,15 @@ Contains configuration files `.htacces` and `example.conf`.
 .project  
 +-- public  
 |	+-- .htaccess
-|   +-- index.php
+|	+-- index.php
 |	+-- wp-config.php
-|   +-- core
-|		+-- (wp core files)
-|		+-- wp-admin
-|		+-- wp-content
-|		+-- wp-include
+|	+-- wp-admin/
+|	+-- wp-content/
+|	+-- wp-include/
+|	+-- (wp core files)
 ```
-The wp-config file can be overridden by placing a `site-conf.php` file in the `project` directory. See https://github.com/cristovaov/wp-sample-config for an example.
+~~The wp-config file can be overridden by placing a `site-conf.php` file in the `project` directory. See https://github.com/cristovaov/wp-sample-config for an example.~~  
+***v2.0.x-alpha: Removed in favor of WP-CLI commands.***
 
 ##### MySQL
 - user: `wp`
@@ -82,7 +82,7 @@ The wp-config file can be overridden by placing a `site-conf.php` file in the `p
 - database name: `wp_dummy`  
 
 These values can currently be manually changed in `wp-scratch-box.sh`.  
-Be sure to change these values in `wp-config.php` or `site-conf.php`.
+Be sure to change these values in `wp-config.php` after provisioning.
 
 ### Pre-packaged development environments (Multi-Machine)
 By leveraging Vagrant's Multi-Machine feature, re-packaged boxes from VVV, Primary Vagrant, ... can be used in **wp-scratch-box** alongside the default `Project` VM.

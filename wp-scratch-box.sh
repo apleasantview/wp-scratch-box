@@ -106,7 +106,7 @@ phpfpm_install() {
 
 wordpress() {
   # local public_directory="public"
-  local core_directory="core"
+  local core_directory="."
   local mysql_database="wp_dummy"
   local mysql_user="wp"
   local mysql_password="wp"
@@ -118,11 +118,9 @@ wordpress() {
   mkdir -p "/var/www/project/public"
   (
     cd "/var/www/project/public"
-    wp core download --path="$core_directory/"
-    cp /vagrant/resources/.htaccess .
-    curl -O -s -S https://raw.githubusercontent.com/cristovaov/wp-sample-config/master/index.php
-    curl -O -s -S https://raw.githubusercontent.com/cristovaov/wp-sample-config/master/wp-config.php
     wp cli version
+    wp core download --path="$core_directory/"
+    wp core config --path="$core_directory/" --dbname="$mysql_database" --dbuser="$mysql_user" --dbpass="$mysql_password"
     wp core version --path="$core_directory/" --extra
   )
 }

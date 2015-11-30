@@ -5,9 +5,11 @@
 Quick Vagrant box for WordPress development, presentations, ...
 
 ### Usage
-`git clone https://github.com/apleasantview/wp-scratch-box.git`  
-`vagrant up`  
-
+```
+git clone https://github.com/apleasantview/wp-scratch-box.git
+cd wp-scratch-box
+vagrant up
+```
 Visit `http://172.16.0.12` in your browser, you should be greeted by the five minute install.
 
 #### Roadmap
@@ -32,7 +34,7 @@ Current configuration options:
 |"name" | "vm.define", "vm.provider.name" | wp-scratch-box |
 |"vagrant_box" | "vm.box" | ubunty/trusty64 |
 |"box_ip" | "vm.network" | 172.16.0.12 |
-|"box_hostname"| *unused* | (empty) |
+|"box_hostname"| *currently unused* | *(box default)* |
 
 ##### Synced folder
 Vagrant will, on first run, create a folder named `content` which is linked with `/var/www/project/public/core/wp-content` inside the VM.  
@@ -47,16 +49,16 @@ This is the provisioning file.
 	- vim
 	- wp-cli w/ tab completions
 
-#### LAMP
-- Apache 2.4
-	- Document root: `/var/www/project/public`
-- MySQL 5.5
-	- root user: `root`
-	- root password: `root`
-- PHP-FPM 5.6
+- **LAMP**
+	- Apache 2.4
+		- Document root: `/var/www/project/public`
+	- MySQL 5.5
+		- root user: `root`
+		- root password: `root`
+	- PHP-FPM 5.6
 
 #### Resources (folder)
-Contains configuration files `.htacces` and `example.conf`.
+Contains configuration files `.htaccess` and `example.conf`.
 
 #### WordPress
 - Latest version (downloaded through WP-CLI)  
@@ -107,7 +109,7 @@ Follow with command `vagrant up`
 **Notes:** 
 - All keys are required and Parent Object must be set to `"Custom"` in `Vagrant.json`.
 - The default `Project`machine will **not** start and be provisioned. You can force it to start with the command `vagrant up NAME`
-- If you run both `Project` and `Custom` setting their IP's in the same range will create a network and facilitate communications between the two machines.  
+- If you run both `Project` and `Custom`, setting their IP's in the same range will create a network and facilitate communications between the two machines.  
 - Synced folders for the `Custom` machine needs to be currently manually set in the `Vagrantfile` if required.
 
 ***Please refer to the [Vagrant docs](https://docs.vagrantup.com/v2/multi-machine/index.html) for more info on Multi-Machine setups.***  

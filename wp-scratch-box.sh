@@ -126,4 +126,5 @@ wordpress() {
 }
 
 main
-printf "Script finished\n"
+echo " "
+printf "Provisioning script finished without errors.\nHave a pleasant view!\n"

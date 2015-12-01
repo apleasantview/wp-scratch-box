@@ -3,7 +3,7 @@
 #description    :provisioning script for wp-scratch-box
 #author         :Cristovao Verstraeten
 #date           :20151120
-#version        :2.0.2-alpha
+#version        :2.1.0-alpha
 #usage          :vagrant up --provision, vagrant provision
 #notes          :
 #bash_version   :4.3.39(3)-release
@@ -106,10 +106,10 @@ phpfpm_install() {
 
 wordpress() {
   # local public_directory="public"
-  local core_directory="."
-  local mysql_database="wp_dummy"
-  local mysql_user="wp"
-  local mysql_password="wp"
+  local core_directory=${wp_custom[0]:-.}
+  local mysql_database=${wp_custom[1]:-wp_dummy}
+  local mysql_user=${wp_custom[2]:-wp}
+  local mysql_password=${wp_custom[3]:-wp}
 
   mysql -u root -e "CREATE DATABASE IF NOT EXISTS $mysql_database;"
   mysql -u root -e "GRANT ALL PRIVILEGES ON $mysql_database.* TO $mysql_user@localhost IDENTIFIED BY '$mysql_password';"

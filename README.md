@@ -1,31 +1,33 @@
-## wp-scratch-box
-***v2.0.x-alpha***  
+# wp-scratch-box
+***v2.1.x-alpha***  
 
-### Description
-Quick Vagrant box for WordPress development, presentations, ...
+## Description
+Quick Vagrant box for WordPress development, presentations, workshops, ...
 
-### Usage
+## Usage
 ```
 git clone https://github.com/apleasantview/wp-scratch-box.git
 cd wp-scratch-box
 vagrant up
 ```
-Visit `http://172.16.0.12` in your browser, you should be greeted by the five minute install.
-
-#### Roadmap
-- Looking for contributions and input on the PHP, APACHE || `.htaccess` file and MySQL configurations.
--  Setting variables from `Vagrant.json` in `wp-scratch-box.sh` for additional installation settings. Will be toying with JQ coming weeks. 
-- a VMWare provisioner for the `Vagranfile`.
-- Suggestions can be discussed in the issue tracker/through PR.  
-</br>
+Visit `http://172.16.0.12` in your browser, you will be greeted by the five minute install.  
+<br>
 
 ### Minimum Requirements
 - [Vagrant](https://www.vagrantup.com/) ( 1.7.4 > )
-- [Virtualbox](https://www.virtualbox.org/) ( 5.0 > )
+- [Virtualbox](https://www.virtualbox.org/) ( 5.0 > )  
+<br>
 
-### Configuration
+### Roadmap
+- Looking for contributions and input on the PHP, APACHE || `.htaccess` file and MySQL configurations.
+-  ~~Setting variables from `Vagrant.json` in `wp-scratch-box.sh` for additional installation settings. Will be toying with JQ coming weeks.~~ 
+- a VMWare provisioner for the `Vagranfile`.
+- Suggestions and improvements can be discussed in the issue tracker/through PR.  
+</br>
 
-#### Vagrant.json
+## Configuration
+
+### Vagrant.json
 Vagrant configuration can be set in `Vagrant.json`.
 Current configuration options:
 
@@ -36,11 +38,12 @@ Current configuration options:
 |"box_ip" | "vm.network" | 172.16.0.12 |
 |"box_hostname"| *currently unused* | *(box default)* |
 
-##### Synced folder
-Vagrant will, on first run, create a folder named `content` which is linked with `/var/www/project/public/core/wp-content` inside the VM.  
-The Host directory will be synced to `/vagrant/` per Vagrants' defaults
+#### Synced folder
+Vagrant will, on first run, create a folder named `content` which is linked with `/var/www/project/public/wp-content` inside the VM.  
+The Host directory will be synced to `/vagrant/` per Vagrants' defaults.  
+<br>
 
-#### wp-scratch-box.sh
+### wp-scratch-box.sh
 This is the provisioning file.
 - **packages:**
     - curl
@@ -55,41 +58,62 @@ This is the provisioning file.
 	- MySQL 5.5
 		- root user: `root`
 		- root password: `root`
-	- PHP-FPM 5.6
+	- PHP-FPM 5.6  
+- **WordPress**
+	- *please refer below.*
+<br>
 
-#### Resources (folder)
-Contains configuration files `.htaccess` and `example.conf`.
+### Resources (folder)
+Contains configuration files `.htaccess` and `example.conf`.  
+<br>
 
-#### WordPress
-- Latest version (downloaded through WP-CLI)  
+### WordPress
+Latest stable version downloaded through WP-CLI.  
 
-##### Folder structure
+| Parameters | WP-CLI | Default |
+|------------|--------|:-------:|
+| $core_directory | --path | . |
+| $mysql_database | --dbname |wp_dummy |
+| $mysql_user | --dbuser |wp |
+| $mysql_password | --dbpass |wp |
+
+#### Custom parameters  
+In `Vagrant.json` write the following JSON array:
 ```
-.project  
-+-- public  
+{
+  "Project": {
+    ... ,
+	"wordpress":[
+		"$core_directory", "$mysql_database", "$mysql_user", "$mysql_password"
+	]
+  }
+}
+```
+These will be read by JQ at provisioning.  
+
+**Notes:** 
+- Don't forget to replace *$parameter* by your own value!
+- Object for your custom parameters must be set to `"wordpress"` in `Vagrant.json`.
+- Following the parameters order in the JSON array is required.
+- If you change `$core_directory`, you will have to manually change the synced folder path accordingly in `Vagrantfile`
+
+#### Default folder structure
+```
+/var/www/project/  
++-- public/  
 |	+-- .htaccess
 |	+-- index.php
 |	+-- wp-config.php
 |	+-- wp-admin/
 |	+-- wp-content/
 |	+-- wp-include/
-|	+-- (wp core files)
 ```
-~~The wp-config file can be overridden by placing a `site-conf.php` file in the `project` directory. See https://github.com/cristovaov/wp-sample-config for an example.~~  
-***v2.0.x-alpha: Removed in favor of WP-CLI commands.***
+<br>
 
-##### MySQL
-- user: `wp`
-- password: `wp`
-- database name: `wp_dummy`  
-
-These values can currently be manually changed in `wp-scratch-box.sh`.  
-Be sure to change these values in `wp-config.php` after provisioning.
-
-### Pre-packaged development environments (Multi-Machine)
+## Pre-packaged development environments (Multi-Machine)
 By leveraging Vagrant's Multi-Machine feature, re-packaged boxes from VVV, Primary Vagrant, ... can be used in **wp-scratch-box** alongside the default `Project` VM.
 
-#### Usage
+### Usage
 In `Vagrant.json` append the following Parent Object:
 ```
 {
@@ -108,14 +132,14 @@ Follow with command `vagrant up`
 
 **Notes:** 
 - All keys are required and Parent Object must be set to `"Custom"` in `Vagrant.json`.
-- The default `Project`machine will **not** start and be provisioned. You can force it to start with the command `vagrant up NAME`
+- The default `Project`machine will **not** start and be provisioned. You can force it to start with the command `vagrant up NAME`.
 - If you run both `Project` and `Custom`, setting their IP's in the same range will create a network and facilitate communications between the two machines.  
 - Synced folders for the `Custom` machine needs to be currently manually set in the `Vagrantfile` if required.
 
 ***Please refer to the [Vagrant docs](https://docs.vagrantup.com/v2/multi-machine/index.html) for more info on Multi-Machine setups.***  
 <br>
 
-### License
+## License
 Released under the MIT license.  
 *2015 - Cristovao Verstraeten*  
 <br>

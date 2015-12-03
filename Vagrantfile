@@ -11,6 +11,9 @@ Vagrant.configure(2) do |config|
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
   config.vm.define set['Project']['name'] do |project|
     project.vm.box = set['Project']['vagrant_box']
+    if !set['Project']['box_hostname'].empty?
+      project.vm.hostname= set['Project']['box_hostname']
+    end
     project.vm.provider "virtualbox" do |vb|
       vb.name = set['Project']['name']
     end
@@ -24,6 +27,9 @@ Vagrant.configure(2) do |config|
     config.vm.define set['Project']['name'], autostart: false
     config.vm.define set['Custom']['name'] do |custom|
       custom.vm.box = set['Custom']['vagrant_box']
+      if !set['Custom']['box_hostname'].empty?
+        custom.vm.hostname= set['Custom']['box_hostname']
+      end
       custom.vm.provider "virtualbox" do |vb|
         vb.name = set['Custom']['name']
       end

@@ -32,7 +32,7 @@ Vagrant configuration can be set in `Vagrant.json`. Current configuration option
 |"name" | "vm.define", "vm.provider.name" | wp-scratch-box |
 |"vagrant_box" | "vm.box" | ubunty/trusty64 |
 |"box_ip" | "vm.network" | 172.16.0.12 |
-|"box_hostname"| *currently unused* | *(box default)* |
+|"box_hostname"| "vm.hostname" | empty *(box default)* |
 
 #### Synced folder
 Vagrant will, on first run, create a folder named `content` which is linked with `/var/www/project/public/wp-content` inside the VM.  

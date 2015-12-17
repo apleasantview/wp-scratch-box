@@ -35,8 +35,7 @@ Vagrant configuration can be set in `Vagrant.json`. Current configuration option
 |"box_hostname"| "vm.hostname" | empty *(box default)* |
 
 #### Synced folder
-Vagrant will, on first run, create a folder named `content` which is linked with `/var/www/project/public/wp-content` inside the VM.  
-The Host directory will be synced to `/vagrant/` per Vagrants' defaults.
+Vagrant will, on first run, create a folder named `content` which is linked with `/var/www/project/public/wp-content` inside the VM. The Host directory will be synced to `/vagrant/` per Vagrants' defaults.
 
 ### wp-scratch-box.sh
 This is the provisioning file.
@@ -57,7 +56,9 @@ This is the provisioning file.
 	- *please refer below.*
 
 ### Resources (folder)
-Contains configuration files `.htaccess` and `example.conf`.  
+Contains configuration files used during provisioning:  
+`.htaccess` - `example.conf` - `custom-php.ini`.  
+  
 Files can be rewritten according to your needs.
 
 ### WordPress

@@ -103,6 +103,8 @@ EOF
 phpfpm_install() {
   sudo apt-get install -y php5-fpm \
     php5-cli php5-mcrypt php5-mysql php5-gd php5-curl
+  sudo cp /vagrant/resources/custom-php.ini /etc/php5/mods-available/
+  sudo php5enmod custom-php
 }
 
 wordpress() {

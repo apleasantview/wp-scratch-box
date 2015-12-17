@@ -71,7 +71,8 @@ apache_install() {
 
 apache_configurations() {
   sudo apt-get install -y \
-    libapache2-mod-auth-mysql
+    libapache2-mod-auth-mysql \
+    libapache2-mod-php5
   sudo a2enmod proxy proxy_fcgi rewrite
   sudo service apache2 restart
 

@@ -1,5 +1,5 @@
 # wp-scratch-box
-***v2.1.x-alpha***  
+***v2.2.x-alpha***  
 
 ## Description
 Quick Vagrant box for WordPress development, presentations, workshops, ...

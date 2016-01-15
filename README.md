@@ -136,7 +136,7 @@ Follow with command `vagrant up`
 
 ## License
 Released under the MIT license.  
-*2015 - Cristovao Verstraeten*  
+*2015 - 2016 Cristovao Verstraeten*  
 <br>
 
 ***Have a pleasant view!***

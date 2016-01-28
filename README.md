@@ -1,5 +1,5 @@
 # wp-scratch-box
-***v2.2.x-alpha***  
+***v2.3.x-alpha***  
 
 ## Description
 Quick Vagrant box for WordPress development, presentations, workshops, ...
@@ -92,7 +92,7 @@ These will be read by JQ at provisioning.
 - Object for your custom parameters must be set to `"wordpress"` in `Vagrant.json`.
 - Following the parameters order in the JSON array is required.
 - If you change `$core_directory`, you will have to manually change the synced folder path accordingly in `Vagrantfile`.
-- Default `$core_directory` is a **dot**, referencing `/var/www/project/public/`.
+- Default `$core_directory` is a **dot**, referencing `/var/www/project/public/$core_directory`.
 
 #### Default folder structure
 ```

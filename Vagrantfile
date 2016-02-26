@@ -8,6 +8,7 @@ set = JSON.parse(json)
 alt_box = set.has_key?("Custom")
 
 Vagrant.configure(2) do |config|
+  config.ssh.forward_agent = true
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
   config.vm.define set['Project']['name'] do |project|
     project.vm.box = set['Project']['vagrant_box']

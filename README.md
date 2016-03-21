@@ -1,5 +1,5 @@
 # wp-scratch-box
-***v2.3.x-alpha***  
+***v2.5.x-alpha***  
 
 ## Description
 Quick Vagrant box for WordPress development, presentations, workshops, ...
@@ -33,9 +33,15 @@ Vagrant configuration can be set in `Vagrant.json`. Current configuration option
 |"vagrant_box" | "vm.box" | ubunty/trusty64 |
 |"box_ip" | "vm.network" | 172.16.0.12 |
 |"box_hostname"| "vm.hostname" | empty *(box default)* |
+|"synced_folder"| "vm.synced_folder"| <i>see below</i> |
 
 #### Synced folder
-Vagrant will, on first run, create a folder named `content` which is linked with `/var/www/project/public/wp-content` inside the VM. The Host directory will be synced to `/vagrant/` per Vagrants' defaults.
+| "synced_folder" | path |
+| --------------- | ---- |
+| "host_path" | "content/" |
+| "guest_path" | "var/www/project/public/wp-content/ |
+
+Vagrant will create the `host_path` folder if it doesn't exist. The main Host directory will be synced to `/vagrant/` per Vagrants' defaults.
 
 ### wp-scratch-box.sh
 This is the provisioning file.

@@ -109,20 +109,20 @@ phpfpm_install() {
 }
 
 wordpress() {
-  # local public_directory="public"
-  local core_directory=${wp_custom[0]:-.}
-  local mysql_database=${wp_custom[1]:-wp_dummy}
-  local mysql_user=${wp_custom[2]:-wp}
-  local mysql_password=${wp_custom[3]:-wp}
-  local mysql_prefix=${wp_custom[4]:-wp_}
+  local public_directory=${wp_custom[0]:-public}
+  local core_directory=${wp_custom[1]:-.}
+  local mysql_database=${wp_custom[2]:-wp_dummy}
+  local mysql_user=${wp_custom[3]:-wp}
+  local mysql_password=${wp_custom[4]:-wp}
+  local mysql_prefix=${wp_custom[5]:-wp_}
 
   mysql -u root -e "CREATE DATABASE IF NOT EXISTS $mysql_database;"
   mysql -u root -e "GRANT ALL PRIVILEGES ON $mysql_database.* TO $mysql_user@localhost IDENTIFIED BY '$mysql_password';"
 
   sudo chown -R -f vagrant:vagrant /var/www/
-  mkdir -p "/var/www/project/public"
+  mkdir -p "/var/www/project/$public_directory"
   (
-    cd "/var/www/project/public"
+    cd "/var/www/project/$public_directory"
     wp cli version
     wp core download --path="$core_directory/"
     wp core config --path="$core_directory/" --dbname="$mysql_database" --dbuser="$mysql_user" --dbpass="$mysql_password" --dbprefix="$mysql_prefix"

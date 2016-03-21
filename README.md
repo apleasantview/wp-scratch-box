@@ -2,7 +2,9 @@
 ***v2.6.x-alpha***  
 
 ## Description
-Quick Vagrant box for WordPress development, presentations, workshops, ...
+Quick Vagrant box for WordPress. Configurable and with support for Vagrant Multi-Machine.   
+Suitable for presentations, workshops, ... and minor development.   
+
 
 ## Usage
 ```
@@ -62,10 +64,10 @@ This is the provisioning file.
 	- *please refer below.*
 
 ### Resources (folder)
-Contains configuration files used during provisioning:  
+Contains configuration files used during provisioning for Apache and PHP:  
 `.htaccess` - `example.conf` - `custom-php.ini`.  
   
-Files can be rewritten according to your needs.
+Please review these files and make adjustments accordingly if you change any default configuration values.
 
 ### WordPress
 Latest stable version downloaded through WP-CLI.
@@ -116,7 +118,9 @@ These will be read by JQ at provisioning.
 ```
 
 ## Pre-packaged development environments (Multi-Machine)
-By leveraging Vagrant's Multi-Machine feature, re-packaged boxes from VVV, Primary Vagrant, ... can be used in **wp-scratch-box** alongside the default `Project` VM.
+By leveraging Vagrant's Multi-Machine feature, re-packaged boxes from VVV, Primary Vagrant, ... can be used in **wp-scratch-box** alongside the main `Project` VM.
+
+For this use case, the main project serves as a sort of local staging environment. Pre-packaged boxes more resembling your production environment can also be used. Modify `vagrant_box` in the json file and run `vagrant up NAME --no privision`.
 
 ### Usage
 In `Vagrant.json` append the following Parent Object:
@@ -138,8 +142,8 @@ Follow with command `vagrant up`
 **Notes:** 
 - All keys are required and Parent Object must be set to `"Custom"` in `Vagrant.json`.
 - The default `Project`machine will **not** start and be provisioned. You can force it to start with the command `vagrant up NAME`.
-- If you run both `Project` and `Custom`, setting their IP's in the same range will create a network and facilitate communications between the two machines.
-- Synced folders for the `Custom` machine needs to be currently manually set in the `Vagrantfile` if required.
+- If you run both `Project` and `Custom`, setting their IP's in the same range will create a network and facilitate communication between the two machines.
+- Synced folders for the `Custom` machine needs to be manually set in the `Vagrantfile` if required.
 
 ***Please refer to the [Vagrant docs](https://docs.vagrantup.com/v2/multi-machine/index.html) for more info on Multi-Machine setups.***
 

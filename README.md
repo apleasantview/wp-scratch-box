@@ -1,5 +1,5 @@
 # wp-scratch-box
-***v2.5.x-alpha***  
+***v2.6.x-alpha***  
 
 ## Description
 Quick Vagrant box for WordPress development, presentations, workshops, ...
@@ -37,7 +37,7 @@ Vagrant configuration can be set in `Vagrant.json`. Current configuration option
 
 #### Synced folder
 | "synced_folder" | path |
-| --------------- | ---- |
+| --------------- |:----:|
 | "host_path" | "content/" |
 | "guest_path" | "var/www/project/public/wp-content/ |
 
@@ -72,6 +72,7 @@ Latest stable version downloaded through WP-CLI.
 
 | Parameters | WP-CLI | Default |
 |------------|--------|:-------:|
+| $public_directory | *core parent directory* | public |
 | $core_directory | --path | **.** |
 | $mysql_database | --dbname | wp_dummy |
 | $mysql_user | --dbuser | wp |
@@ -85,6 +86,7 @@ In `Vagrant.json` add the following JSON array:
   "Project": {
     ... ,
 	"wordpress":[
+		"$public_directory",
 		"$core_directory", "$mysql_database", 
 		"$mysql_user", "$mysql_password", "$mysql_prefix"
 	]
@@ -97,8 +99,9 @@ These will be read by JQ at provisioning.
 - Don't forget to replace *$parameter* by your own value!
 - Object for your custom parameters must be set to `"wordpress"` in `Vagrant.json`.
 - Following the parameters order in the JSON array is required.
-- If you change `$core_directory`, you will have to manually change the synced folder path accordingly in `Vagrantfile`.
-- Default `$core_directory` is a **dot**, referencing `/var/www/project/public/$core_directory`.
+- If you change `$public_directory` `$core_directory`, set the synced folder path accordingly in `Vagrant.json` and vice-versa.
+- Default `$public_directory` refers to `/var/www/project/$public_directory`.
+- Default `$core_directory` is a **dot**, referencing `/var/www/project/$public_directory/$core_directory`.
 
 #### Default folder structure
 ```

@@ -108,6 +108,11 @@ phpfpm_install() {
   sudo php5enmod custom-php
 }
 
+wpcli_error_handler() {
+  printf "WordPress files seem to already be present here. Moving on...\n"
+  exit 0
+}
+
 wordpress() {
   local public_directory=${wp_custom[0]:-public}
   local core_directory=${wp_custom[1]:-.}
@@ -122,9 +127,11 @@ wordpress() {
   sudo chown -R -f vagrant:vagrant /var/www/
   mkdir -p "/var/www/project/$public_directory"
   (
+    trap 'wpcli_error_handler' ERR
+    
     cd "/var/www/project/$public_directory"
     wp cli version
-    wp core download --path="$core_directory/"
+    wp core download --path="$core_directory/" 2> /dev/null 
     wp core config --path="$core_directory/" --dbname="$mysql_database" --dbuser="$mysql_user" --dbpass="$mysql_password" --dbprefix="$mysql_prefix"
     wp core version --path="$core_directory/" --extra
   )

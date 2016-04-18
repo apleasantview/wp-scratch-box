@@ -1,5 +1,5 @@
 # wp-scratch-box
-***v2.7.x***  
+***v2.8.x***  
 
 ## Description
 Quick Vagrant box for WordPress. Configurable and with support for Vagrant Multi-Machine.   
@@ -24,7 +24,7 @@ Visit `http://172.16.0.12` in your browser, you will be greeted by the five minu
 - a VMWare provisioner for the `Vagranfile`.
 - Suggestions and improvements can be discussed in the issue tracker/through PR.
 
-## Configuration
+## Vagrant Configuration
 
 ### Vagrant.json
 Vagrant configuration can be set in `Vagrant.json`. Current configuration options are:
@@ -65,11 +65,13 @@ This is the provisioning file.
 
 ### Resources (folder)
 Contains configuration files used during provisioning for Apache and PHP:  
-`.htaccess` - `example.conf` - `custom-php.ini`.  
+`.htaccess` - `example.conf` - `custom-php.ini`.
   
 Please review these files and make adjustments accordingly if you change any default configuration values.
 
-### WordPress
+The `resources` folder also has a Mailcatcher installation script.
+
+## WordPress Configuration
 Latest stable version downloaded through WP-CLI.
 
 | Parameters | WP-CLI | Default |
@@ -117,6 +119,16 @@ These will be read by JQ at provisioning.
 |	+-- wp-include/
 ```
 
+## Mailcatcher: mailcatcher.sh
+You can install [Mailcatcher](https://mailcatcher.me/) with the prodived installation script in the `resources` folder. Mailcatcher is configured to start at boot.   
+Mailcatcher address (w/ the default configuration IP): `http://172.16.0.12:1080/`
+
+### Installation
+```
+(host-machine)$ vagrant ssh
+(guest-machine)$ bash /vagrant/resources/mailcatcher.sh
+```
+  
 ## Pre-packaged development environments (Multi-Machine)
 By leveraging Vagrant's Multi-Machine feature, re-packaged boxes from VVV, Primary Vagrant, ... can be used in **wp-scratch-box** alongside the main `Project` VM.
 

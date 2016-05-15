@@ -5,8 +5,8 @@
     "box_ip": "172.16.0.12",
     "box_hostname": "",
     "synced_folder": {
-      "host_path": "content/",
-      "guest_path": "/var/www/project/public/wp-content/"
+      "host_path": "project/",
+      "guest_path": "/var/www/project/public/"
     }
   }
 }

@@ -3,7 +3,7 @@
 #description    :provisioning script for wp-scratch-box
 #author         :Cristovao Verstraeten
 #date           :20151120
-#version        :2.8.0
+#version        :2.8.2
 #usage          :vagrant up --provision, vagrant provision
 #notes          :
 #bash_version   :4.3.39(3)-release
@@ -13,9 +13,8 @@ IFS=$'\n\t'
 
 main() {
   # set -x
-  base_packages
   additional_repos
-  sudo apt-get update
+  base_packages
   lamp_install
   wp_custom=($(jq -r 'if .Project.wordpress then .Project.wordpress|.[] else empty end' /vagrant/Vagrant.json))
   wordpress
@@ -30,7 +29,11 @@ base_packages() {
     jq \
     software-properties-common \
     vim
+    
+  wpcli_install
+}
 
+wpcli_install() {
   mkdir -p /home/vagrant/wp-cli
   (
     cd /home/vagrant/wp-cli

@@ -22,6 +22,11 @@ main() {
   # set +x
 }
 
+additional_repos() {
+  sudo add-apt-repository -y ppa:ondrej/apache2
+  sudo add-apt-repository -y ppa:ondrej/php5-5.6
+}
+
 base_packages() {
   sudo apt-get update && sudo apt-get install -y \
     curl \
@@ -43,11 +48,6 @@ wpcli_install() {
     sudo mv wp-cli.phar /usr/local/bin/wp
   ) &
   printf "\n%s\n" "source /home/vagrant/wp-cli/wp-completion.bash" >> .bashrc
-}
-
-additional_repos() {
-  sudo add-apt-repository -y ppa:ondrej/apache2
-  sudo add-apt-repository -y ppa:ondrej/php5-5.6
 }
 
 reset_directory_permissions() {

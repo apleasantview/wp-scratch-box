@@ -23,12 +23,14 @@ main() {
 }
 
 additional_repos() {
+  sudo add-apt-repository -y ppa:ansible/ansible
   sudo add-apt-repository -y ppa:ondrej/apache2
   sudo add-apt-repository -y ppa:ondrej/php5-5.6
 }
 
 base_packages() {
   sudo apt-get update && sudo apt-get install -y \
+    ansible \
     curl \
     git-core \
     jq \

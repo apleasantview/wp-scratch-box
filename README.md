@@ -40,8 +40,8 @@ Vagrant configuration can be set in `Vagrant.json`. Current configuration option
 #### Synced folder
 | "synced_folder" | path |
 | --------------- |:----:|
-| "host_path" | "content/" |
-| "guest_path" | "var/www/project/public/wp-content/ |
+| "host_path" | "project/" |
+| "guest_path" | "var/www/project/public/" |
 
 Vagrant will create the `host_path` folder if it doesn't exist. The main Host directory will be synced to `/vagrant/` per Vagrants' defaults.
 

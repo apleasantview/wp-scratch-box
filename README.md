@@ -1,5 +1,5 @@
 # wp-scratch-box
-***v2.9.x***  
+***v2.10.x***  
 
 ## Description
 Quick Vagrant box for WordPress. Configurable and with support for Vagrant Multi-Machine.   

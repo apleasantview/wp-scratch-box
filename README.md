@@ -48,6 +48,7 @@ Vagrant will create the `host_path` folder if it doesn't exist. The main Host di
 ### wp-scratch-box.sh
 This is the provisioning file.
 - **packages:**
+    - ansible
     - curl
     - git-core
 	- jq
@@ -68,6 +69,8 @@ Contains configuration files used during provisioning for Apache and PHP:
 `.htaccess` - `example.conf` - `custom-php.ini`.
   
 Please review these files and make adjustments accordingly if you change any default configuration values.
+
+**Note:** Instead of rewriting these files, the use of Ansible playbooks after the initial provisioning is preferred. Equally, using Ansible to add any other packages or modules is encouraged.
 
 The `resources` folder also has a Mailcatcher installation script.
 

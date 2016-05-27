@@ -20,10 +20,10 @@ Vagrant.configure(2) do |config|
     end
     project.vm.network "private_network", ip: set['Project']['box_ip']
     project.vm.provision "shell", path: "wp-scratch-box.sh", privileged: false
-    project.vm.synced_folder set['Project']['synced_folder']['host_path'], set['Project']['synced_folder']['guest_path'], 
-      create: true, owner: "www-data", group: "www-data"
+    project.vm.synced_folder set['Project']['synced_folder']['host_path'], set['Project']['synced_folder']['guest_path'],
+      create: true, owner: "vagrant", group: "www-data", :mount_options => ['dmode=775', 'fmode=664']
   end
-  
+
   if alt_box == true
     config.vm.define set['Project']['name'], autostart: false
     config.vm.define set['Custom']['name'] do |custom|
@@ -35,6 +35,6 @@ Vagrant.configure(2) do |config|
         vb.name = set['Custom']['name']
       end
       custom.vm.network "private_network", ip: set['Custom']['box_ip']
-    end  
+    end
   end
 end

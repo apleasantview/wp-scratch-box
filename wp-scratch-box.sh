@@ -18,8 +18,6 @@ main() {
   lamp_install
   wp_custom=($(jq -r 'if .Project.wordpress then .Project.wordpress|.[] else empty end' /vagrant/Vagrant.json))
   wordpress
-  reset_directory_permissions
-  # set +x
 }
 
 additional_repos() {
@@ -36,7 +34,7 @@ base_packages() {
     jq \
     software-properties-common \
     vim
-    
+
   wpcli_install
 }
 
@@ -128,14 +126,13 @@ wordpress() {
   mysql -u root -e "CREATE DATABASE IF NOT EXISTS $mysql_database;"
   mysql -u root -e "GRANT ALL PRIVILEGES ON $mysql_database.* TO $mysql_user@localhost IDENTIFIED BY '$mysql_password';"
 
-  sudo chown -R -f vagrant:vagrant /var/www/
   mkdir -p "/var/www/project/$public_directory"
   (
     trap 'wpcli_error_handler' ERR
-    
+
     cd "/var/www/project/$public_directory"
     wp cli version
-    wp core download --path="$core_directory/" 2> /dev/null 
+    wp core download --path="$core_directory/" 2> /dev/null
     wp core config --path="$core_directory/" --dbname="$mysql_database" --dbuser="$mysql_user" --dbpass="$mysql_password" --dbprefix="$mysql_prefix"
     wp core version --path="$core_directory/" --extra
   )

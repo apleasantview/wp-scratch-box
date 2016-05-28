@@ -18,6 +18,7 @@ main() {
   lamp_install
   wp_custom=($(jq -r 'if .Project.wordpress then .Project.wordpress|.[] else empty end' /vagrant/Vagrant.json))
   wordpress
+  # set +x
 }
 
 additional_repos() {
@@ -46,7 +47,7 @@ wpcli_install() {
     curl -O -s -S https://raw.githubusercontent.com/wp-cli/wp-cli/master/utils/wp-completion.bash
     chmod +x wp-cli.phar
     sudo mv wp-cli.phar /usr/local/bin/wp
-  ) &
+  )
   printf "\n%s\n" "source /home/vagrant/wp-cli/wp-completion.bash" >> .bashrc
 }
 
@@ -71,6 +72,8 @@ apache_configurations() {
 
   sudo cp /vagrant/resources/example.conf /etc/apache2/sites-available/000-default.conf
   sudo service apache2 reload
+
+  sudo usermod -a -G www-data vagrant
 }
 
 mysql_install() {
@@ -82,7 +85,7 @@ mysql_install() {
 
   # Run MySQL without passwords for convenience
   (
-  cat << 'EOF' | tee /home/vagrant/.my.cnf
+    cat << 'EOF' | tee /home/vagrant/.my.cnf
 [client]
 user     = root
 password = root
@@ -91,7 +94,7 @@ password = root
 user     = root
 password = root
 EOF
-  ) &
+  )
 }
 
 phpfpm_install() {

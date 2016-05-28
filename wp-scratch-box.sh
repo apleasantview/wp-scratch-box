@@ -50,15 +50,6 @@ wpcli_install() {
   printf "\n%s\n" "source /home/vagrant/wp-cli/wp-completion.bash" >> .bashrc
 }
 
-reset_directory_permissions() {
-  sudo usermod -a -G www-data vagrant
-  sudo chown -R -f www-data:www-data /var/www/
-  find /var/www/ -type d -print0 | sudo xargs -0 chmod -R -f 775 /var/www/
-  find /var/www/ -type f -print0 | sudo xargs -0 chmod -R -f 774 /var/www/
-  sudo chmod -R u+s /var/www/
-  sudo chmod -R g+s /var/www/
-}
-
 lamp_install() {
   apache_install
   mysql_install

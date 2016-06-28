@@ -3,7 +3,7 @@
 #description    :provisioning script for wp-scratch-box
 #author         :Cristovao Verstraeten
 #date           :20151120
-#version        :2.10.3
+#version        :2.10.4
 #usage          :vagrant up --provision, vagrant provision
 #notes          :
 #bash_version   :4.3.39(3)-release
@@ -24,7 +24,7 @@ main() {
 additional_repos() {
   sudo add-apt-repository -y ppa:ansible/ansible
   sudo add-apt-repository -y ppa:ondrej/apache2
-  sudo add-apt-repository -y ppa:ondrej/php5-5.6
+  sudo add-apt-repository -y ppa:ondrej/php
 }
 
 base_packages() {
@@ -63,11 +63,12 @@ apache_install() {
   sudo apt-get install -y \
     apache2 \
     libapache2-mod-auth-mysql \
-    libapache2-mod-php5
+    libapache2-mod-php5.6
 }
 
 apache_configurations() {
-  sudo a2enmod proxy proxy_fcgi rewrite
+  sudo a2enmod proxy proxy_fcgi rewrite setenvif
+  sudo a2enconf php5.6-fpm
   sudo service apache2 restart
 
   sudo cp /vagrant/resources/example.conf /etc/apache2/sites-available/000-default.conf
@@ -98,10 +99,10 @@ EOF
 }
 
 phpfpm_install() {
-  sudo apt-get install -y php5-fpm \
-    php5-cli php5-mcrypt php5-mysql php5-gd php5-curl
-  sudo cp /vagrant/resources/custom-php.ini /etc/php5/mods-available/
-  sudo php5enmod custom-php
+  sudo apt-get install -y php5.6-fpm \
+    php5.6-cli php5.6-mcrypt php5.6-mysql php5.6-gd php5.6-curl
+  sudo cp /vagrant/resources/custom-php.ini /etc/php/5.6/mods-available/
+  sudo phpenmod custom-php
 }
 
 wpcli_error_handler() {

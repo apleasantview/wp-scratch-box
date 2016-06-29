@@ -3,7 +3,7 @@
 #description    :Installs MailCatcher on wp-scratch-box VM
 #author         :Cristovao Verstraeten
 #date           :20151202
-#version        :20160417
+#version        :20160629
 #usage          :bash mailcatcher.sh
 #notes          :
 #bash_version   :4.3.39(3)-release
@@ -74,9 +74,9 @@ mailcatcher_php(){
   local mailcatcher_path
   mailcatcher_path=$(rbenv which catchmail)
 
-  printf "sendmail_path = %s\n" "$mailcatcher_path" | sudo tee /etc/php5/mods-available/mailcatcher.ini
-  sudo php5enmod mailcatcher
-  sudo service php5-fpm restart; sudo service apache2 restart
+  printf "sendmail_path = %s\n" "$mailcatcher_path" | sudo tee /etc/php/5.6/mods-available/mailcatcher.ini
+  sudo phpenmod mailcatcher
+  sudo service php5.6-fpm restart; sudo service apache2 restart
 }
 
 mailcatcher_upstart(){

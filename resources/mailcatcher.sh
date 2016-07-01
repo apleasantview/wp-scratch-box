@@ -51,7 +51,7 @@ rbenv_ruby_install(){
   )
   
   {
-    echo "export PATH=$HOME/.rbenv/bin:$PATH";
+    echo 'export PATH=$HOME/.rbenv/bin:$PATH'
     echo 'eval "$(rbenv init -)"'
   } >> /home/vagrant/.bash_profile
   source /home/vagrant/.bash_profile

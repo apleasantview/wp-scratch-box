@@ -104,6 +104,9 @@ phpfpm_install() {
     php5.6-cli php5.6-mcrypt php5.6-mysql php5.6-gd php5.6-curl
   sudo cp /vagrant/resources/custom-php.ini /etc/php/5.6/mods-available/
   sudo phpenmod custom-php
+  
+  # explicitly restart php
+  sudo service php5.6-fpm restart &> /dev/null
 }
 
 wpcli_error_handler() {

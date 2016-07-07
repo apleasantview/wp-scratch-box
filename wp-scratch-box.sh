@@ -36,6 +36,7 @@ base_packages() {
     software-properties-common \
     vim
 
+  cp /home/vagrant/.profile /home/vagrant/.bash_profile
   wpcli_install
 }
 
@@ -48,7 +49,7 @@ wpcli_install() {
     chmod +x wp-cli.phar
     sudo mv wp-cli.phar /usr/local/bin/wp
   )
-  printf "\n%s\n" "source /home/vagrant/wp-cli/wp-completion.bash" >> .bashrc
+  printf "\n%s\n" "source /home/vagrant/wp-cli/wp-completion.bash" >> .bash_profile
 }
 
 lamp_install() {

@@ -19,9 +19,9 @@ Visit `http://172.16.0.12` in your browser, you will be greeted by the five minu
 - [Virtualbox](https://www.virtualbox.org/) ( 5.0 > )
 
 ### Roadmap
+- v3.x.x: moving provisioning to Ansible, PHP version bump, MariaDB, ...
 - Looking for contributions and input on the PHP, APACHE || `.htaccess` file and MySQL configurations.
--  ~~Setting variables from `Vagrant.json` in `wp-scratch-box.sh` for additional installation settings. Will be toying with JQ coming weeks.~~
-- a VMWare provisioner for the `Vagranfile`.
+- A VMWare provisioner for the `Vagranfile`.
 - Suggestions and improvements can be discussed in the issue tracker/through PR.
 
 ## Vagrant Configuration

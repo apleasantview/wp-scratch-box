@@ -17,6 +17,8 @@ Vagrant.configure(2) do |config|
     end
     project.vm.provider "virtualbox" do |vb|
       vb.name = set['Project']['name']
+      vb.cpus = set['Project']['vb_cpus']
+      vb.memory = set['Project']['vb_memory']
     end
     project.vm.network "private_network", ip: set['Project']['box_ip']
     project.vm.provision "shell", path: "wp-scratch-box.sh", privileged: false
@@ -33,6 +35,8 @@ Vagrant.configure(2) do |config|
       end
       custom.vm.provider "virtualbox" do |vb|
         vb.name = set['Custom']['name']
+        vb.cpus = set['Custom']['vb_cpus']
+        vb.memory = set['Custom']['vb_memory']
       end
       custom.vm.network "private_network", ip: set['Custom']['box_ip']
     end

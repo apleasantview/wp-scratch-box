@@ -31,11 +31,14 @@ Vagrant configuration can be set in `Vagrant.json`. Current configuration option
 
 | Config file | Vagrant | Default |
 |-------------|---------|:-------:|
-|"name" | "vm.define", "vm.provider.name" | wp-scratch-box |
-|"vagrant_box" | "vm.box" | ubunty/trusty64 |
-|"box_ip" | "vm.network" | 172.16.0.12 |
-|"box_hostname"| "vm.hostname" | empty *(box default)* |
-|"synced_folder"| "vm.synced_folder"| <i>see below</i> |
+| "name" | "vm.define", "vm.provider.name" | wp-scratch-box |
+| "vagrant_box" | "vm.box" | ubunty/trusty64 |
+| "box_ip" | "vm.network" | 172.16.0.12 |
+| "box_hostname" | "vm.hostname" | wp-scratch.box |
+| "vb_cpus" | "vb.cpus" | 2 |
+| "vb_memory" | "vb.memory" | 1024 |
+| "vb_linked_clone" | "vb.linked_clone" | true |
+| "synced_folder" | "vm.synced_folder"| <i>see below</i> |
 
 #### Synced folder
 | "synced_folder" | path |
@@ -45,15 +48,22 @@ Vagrant configuration can be set in `Vagrant.json`. Current configuration option
 
 Vagrant will create the `host_path` folder if it doesn't exist. The main Host directory will be synced to `/vagrant/` per Vagrants' defaults.
 
+### Vagrant plugins
+if you have vagrant-cachier installed, the config in the Vagrantfile is set to cache by machine.
+
 ### wp-scratch-box.sh
 This is the provisioning file.
 - **packages:**
-    - ansible
-    - curl
-    - git-core
-	- jq
-	- vim
-	- wp-cli w/ tab completions
+  - ansible
+  - curl
+  - git-core
+  - jq
+  - ntp
+  - software-properties-common
+  - unzip
+  - vim
+  - zip
+  - wp-cli w/ tab completions
 - **LAMP**
 	- Apache 2.4
 		- Document root: `/var/www/project/public`

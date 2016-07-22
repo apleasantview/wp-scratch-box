@@ -43,4 +43,8 @@ Vagrant.configure(2) do |config|
       custom.vm.network "private_network", ip: set['Custom']['box_ip']
     end
   end
+  
+  if Vagrant.has_plugin?("vagrant-cachier")
+    config.cache.scope = :machine
+  end
 end

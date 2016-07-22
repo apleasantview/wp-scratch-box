@@ -33,8 +33,11 @@ base_packages() {
     curl \
     git-core \
     jq \
+    ntp \
     software-properties-common \
-    vim
+    unzip \
+    vim \
+    zip
 
   cp /home/vagrant/.profile /home/vagrant/.bash_profile
   wpcli_install

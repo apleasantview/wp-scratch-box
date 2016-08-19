@@ -67,12 +67,12 @@ apache_install() {
   sudo apt-get install -y \
     apache2 \
     libapache2-mod-auth-mysql \
-    libapache2-mod-php5.6
+    libapache2-mod-php7.0
 }
 
 apache_configurations() {
   sudo a2enmod proxy proxy_fcgi rewrite setenvif
-  sudo a2enconf php5.6-fpm
+  sudo a2enconf php7.0-fpm
   sudo service apache2 restart
 
   sudo cp /vagrant/resources/example.conf /etc/apache2/sites-available/000-default.conf
@@ -103,13 +103,14 @@ EOF
 }
 
 phpfpm_install() {
-  sudo apt-get install -y php5.6-fpm \
-    php5.6-cli php5.6-mcrypt php5.6-mysql php5.6-gd php5.6-curl
-  sudo cp /vagrant/resources/custom-php.ini /etc/php/5.6/mods-available/
+  sudo apt-get install -y php7.0-fpm \
+    php7.0-cli php7.0-common php7.0-curl \
+    php7.0-gd php7.0-json php7.0-mbstring php7.0-mcrypt php7.0-mysql php7.0-xml php7.0-xmlrpc php7.0-zip
+  sudo cp /vagrant/resources/custom-php.ini /etc/php/7.0/mods-available/
   sudo phpenmod custom-php
   
   # explicitly restart php
-  sudo service php5.6-fpm restart &> /dev/null
+  sudo service php7.0-fpm restart &> /dev/null
 }
 
 wpcli_error_handler() {

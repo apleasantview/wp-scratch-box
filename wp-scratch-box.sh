@@ -25,6 +25,10 @@ additional_repos() {
   sudo add-apt-repository -y ppa:ansible/ansible
   sudo add-apt-repository -y ppa:ondrej/apache2
   sudo add-apt-repository -y ppa:ondrej/php
+  
+  # MariaDB
+  sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
+  sudo add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://mirrors.accretive-networks.net/mariadb/repo/10.1/ubuntu trusty main'
 }
 
 base_packages() {
@@ -57,7 +61,7 @@ wpcli_install() {
 
 lamp_install() {
   apache_install
-  mysql_install
+  mariadb_install
   phpfpm_install
 
   apache_configurations
@@ -81,12 +85,12 @@ apache_configurations() {
   sudo usermod -a -G www-data vagrant
 }
 
-mysql_install() {
+mariadb_install() {
   local root_password="root"
 
-  echo "mysql-server-5.5 mysql-server/root_password password $root_password" | sudo debconf-set-selections
-  echo "mysql-server-5.5 mysql-server/root_password_again password $root_password" | sudo debconf-set-selections
-  sudo apt-get install -y mysql-server-5.5
+  echo "maria-db-10.1 mysql-server/root_password password $root_password" | sudo debconf-set-selections
+  echo "maria-db-10.1 mysql-server/root_password_again password $root_password" | sudo debconf-set-selections
+  sudo apt-get install -y mariadb-server
 
   # Run MySQL without passwords for convenience
   (

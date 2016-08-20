@@ -71,11 +71,12 @@ apache_install() {
   sudo apt-get install -y \
     apache2 \
     libapache2-mod-auth-mysql \
+    libapache2-mod-proxy-html \
     libapache2-mod-php7.0
 }
 
 apache_configurations() {
-  sudo a2enmod proxy proxy_fcgi rewrite setenvif
+  sudo a2enmod expires headers proxy proxy_fcgi rewrite setenvif
   sudo a2enconf php7.0-fpm
   sudo service apache2 restart
 

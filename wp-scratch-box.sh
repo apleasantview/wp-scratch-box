@@ -16,6 +16,7 @@ main() {
   additional_repos
   base_packages
   lamp_install
+  composer_install
   wp_custom=($(jq -r 'if .Project.wordpress then .Project.wordpress|.[] else empty end' /vagrant/Vagrant.json))
   wordpress
   # set +x
@@ -116,6 +117,14 @@ phpfpm_install() {
   
   # explicitly restart php
   sudo service php7.0-fpm restart &> /dev/null
+}
+
+composer_install() {
+  curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+  composer --version
+  
+  # fix 'permission denied' with vagrant-cachier symlink
+  sudo chown -R vagrant:vagrant /home/vagrant/.composer
 }
 
 wpcli_error_handler() {

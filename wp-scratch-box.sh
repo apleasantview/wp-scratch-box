@@ -110,7 +110,7 @@ EOF
 phpfpm_install() {
   sudo apt-get install -y php7.0-fpm \
     php7.0-cli php7.0-common php7.0-curl \
-    php7.0-gd php7.0-json php7.0-mbstring php7.0-mcrypt php7.0-mysql php7.0-xml php7.0-xmlrpc php7.0-zip
+    php7.0-gd php7.0-json php7.0-mbstring php7.0-mcrypt php7.0-mysql php7.0-xml php7.0-xmlrpc php7.0-zip php-pear
   sudo cp /vagrant/resources/custom-php.ini /etc/php/7.0/mods-available/
   sudo phpenmod custom-php
   

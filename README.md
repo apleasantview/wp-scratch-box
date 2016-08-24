@@ -1,5 +1,5 @@
 # wp-scratch-box
-***v3.0.x***  
+***v3.1.x***  
 
 ## Description
 Quick Vagrant box for WordPress. Configurable and with support for Vagrant Multi-Machine.   
@@ -44,9 +44,9 @@ Vagrant configuration can be set in `Vagrant.json`. Current configuration option
 | "synced_folder" | path |
 | --------------- |:----:|
 | "host_path" | "project/" |
-| "guest_path" | "var/www/project/public/" |
+| "guest_path" | "/var/www/project/public" |
 
-Vagrant will create the `host_path` folder if it doesn't exist. The main Host directory will be synced to `/vagrant/` per Vagrants' defaults.
+Vagrant will create the `host_path` folder if it doesn't exist. The main Host directory will be synced to `/vagrant` per Vagrants' defaults.
 
 ### Vagrant plugins
 if you have vagrant-cachier installed, the config in the Vagrantfile is set to cache by machine.
@@ -55,6 +55,7 @@ if you have vagrant-cachier installed, the config in the Vagrantfile is set to c
 This is the provisioning file.
 - **packages:**
   - ansible
+  - composer
   - curl
   - git-core
   - jq
@@ -145,7 +146,7 @@ Mailcatcher address (w/ the default configuration IP): `http://172.16.0.12:1080/
 ## Pre-packaged development environments (Multi-Machine)
 By leveraging Vagrant's Multi-Machine feature, re-packaged boxes from VVV, Primary Vagrant, ... can be used in **wp-scratch-box** alongside the main `Project` VM.
 
-For this use case, the main project serves as a sort of local staging environment. Pre-packaged boxes more resembling your production environment can also be used. Modify `vagrant_box` in the json file and run `vagrant up NAME --no privision`.
+For this use case, the main project serves as a sort of local staging environment. Pre-packaged boxes more resembling your production environment can also be used. Modify `vagrant_box` in the json file and run `vagrant up NAME --no provision`.
 
 ### Usage
 In `Vagrant.json` append the following Parent Object:

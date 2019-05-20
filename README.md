@@ -21,7 +21,7 @@ Visit `http://172.16.0.12` in your browser, you will be greeted by the five minu
 ### Roadmap
 - https w/ Let's Encrypt (help wanted!).
 - Looking for contributions and input on the PHP, APACHE || `.htaccess` file and MySQL configurations.
-- A VMWare provisioner for the `Vagranfile`?
+- A VMWare provisioner for the `Vagrantfile`?
 - Suggestions and improvements can be discussed in the issue tracker/through PR.
 
 ## Vagrant Configuration
@@ -32,7 +32,7 @@ Vagrant configuration can be set in `Vagrant.json`. Current configuration option
 | Config file | Vagrant | Default |
 |-------------|---------|:-------:|
 | "name" | "vm.define", "vm.provider.name" | wp-scratch-box |
-| "vagrant_box" | "vm.box" | ubunty/trusty64 |
+| "vagrant_box" | "vm.box" | ubuntu/bionic64 |
 | "box_ip" | "vm.network" | 172.16.0.12 |
 | "box_hostname" | "vm.hostname" | wp-scratch.box |
 | "vb_cpus" | "vb.cpus" | 2 |

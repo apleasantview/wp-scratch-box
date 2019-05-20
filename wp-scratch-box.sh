@@ -128,7 +128,7 @@ wpcli_error_handler() {
 
 wordpress() {
   local public_directory=${wp_custom[0]:-public}
-  local core_directory=${wp_custom[1]:-.}
+  local root_directory=${wp_custom[1]:-.}
   local mysql_database=${wp_custom[2]:-wp_dummy}
   local mysql_user=${wp_custom[3]:-wp}
   local mysql_password=${wp_custom[4]:-wp}
@@ -137,15 +137,15 @@ wordpress() {
   mysql -u root -e "CREATE DATABASE IF NOT EXISTS $mysql_database;"
   mysql -u root -e "GRANT ALL PRIVILEGES ON $mysql_database.* TO $mysql_user@localhost IDENTIFIED BY '$mysql_password';"
 
-  mkdir -p "/var/www/project/$public_directory"
+  mkdir -p "/var/www/$public_directory"
   (
     trap 'wpcli_error_handler' ERR
 
-    cd "/var/www/project/$public_directory"
+    cd "/var/www/$public_directory"
     wp cli version
-    wp core download --path="$core_directory/" 2> /dev/null
-    wp core config --path="$core_directory/" --dbname="$mysql_database" --dbuser="$mysql_user" --dbpass="$mysql_password" --dbprefix="$mysql_prefix"
-    wp core version --path="$core_directory/" --extra
+    wp core download --path="$root_directory/" 2> /dev/null
+    wp core config --path="$root_directory/" --dbname="$mysql_database" --dbuser="$mysql_user" --dbpass="$mysql_password" --dbprefix="$mysql_prefix"
+    wp core version --path="$root_directory/" --extra
   )
 }
 

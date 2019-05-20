@@ -8,8 +8,8 @@
     "vb_memory": "1024",
     "vb_linked_clone": "true",
     "synced_folder": {
-      "host_path": "project/",
-      "guest_path": "/var/www/project/public"
+      "host_path": "src/",
+      "guest_path": "/var/www/public"
     }
   }
 }

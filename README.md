@@ -5,6 +5,24 @@
 Quick Vagrant box for WordPress. Configurable and with support for Vagrant Multi-Machine.   
 Suitable for presentations, workshops, ... and minor development of course!   
 
+## Table of Contents
+- [Usage](#usage)
+  * [Minimum Requirements](#minimum-requirements)
+  * [Roadmap](#roadmap)
+- [Vagrant Configuration](#vagrant-configuration)
+  * [Vagrant.json](#vagrantjson)
+    + [Synced folder](#synced-folder)
+  * [Vagrant plugins](#vagrant-plugins)
+  * [wp-scratch-box.sh](#wp-scratch-boxsh)
+  * [Resources (folder)](#resources--folder-)
+- [WordPress Configuration](#wordpress-configuration)
+    + [Custom parameters](#custom-parameters)
+    + [Default folder structure](#default-folder-structure)
+- [Mailcatcher: mailcatcher.sh](#mailcatcher--mailcatchersh)
+  * [Installation](#installation)
+- [Pre-packaged development environments (Multi-Machine)](#pre-packaged-development-environments--multi-machine-)
+  * [Usage](#usage-1)
+- [License](#license)
 
 ## Usage
 ```
@@ -68,10 +86,10 @@ This is the provisioning file.
 - **LAMP**
 	- Apache 2.4
 		- Document root: `/var/www/public`
-	- MySQL 5.5
+	- MariaDB 10.3
 		- root user: `root`
 		- root password: `root`
-	- PHP-FPM 5.6
+	- PHP-FPM 7.2
 - **WordPress**
 	- *please refer below.*
 
@@ -99,15 +117,15 @@ Latest stable version downloaded through WP-CLI.
 
 #### Custom parameters
 In `Vagrant.json` add the following JSON array:
-```
+```json
 {
   "Project": {
     ... ,
-	"wordpress":[
-		"$public_directory",
-		"$root_directory", "$mysql_database", 
-		"$mysql_user", "$mysql_password", "$mysql_prefix"
-	]
+    "wordpress":[
+      "$public_directory",
+      "$root_directory", "$mysql_database", 
+      "$mysql_user", "$mysql_password", "$mysql_prefix"
+    ]
   }
 }
 ```

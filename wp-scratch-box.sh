@@ -22,21 +22,17 @@ main() {
   # set +x
 }
 
-additional_repos() {
-  sudo add-apt-repository -y ppa:ansible/ansible
-  sudo add-apt-repository -y ppa:ondrej/apache2
-  sudo add-apt-repository -y ppa:ondrej/php
-  
+additional_repos() {  
   # MariaDB
-  sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
-  sudo add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://mirrors.accretive-networks.net/mariadb/repo/10.1/ubuntu trusty main'
+  sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+  sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://ftp.nluug.nl/db/mariadb/repo/10.3/ubuntu bionic main'
 }
 
 base_packages() {
   sudo apt-get update && sudo apt-get install -y \
-    ansible \
     curl \
     git-core \
+    imagemagick \
     jq \
     ntp \
     software-properties-common \
@@ -70,15 +66,12 @@ lamp_install() {
 
 apache_install() {
   sudo apt-get install -y \
-    apache2 \
-    libapache2-mod-auth-mysql \
-    libapache2-mod-proxy-html \
-    libapache2-mod-php7.0
+    apache2
 }
 
 apache_configurations() {
   sudo a2enmod expires headers proxy proxy_fcgi rewrite setenvif
-  sudo a2enconf php7.0-fpm
+  sudo a2enconf php7.2-fpm
   sudo service apache2 restart
 
   sudo cp /vagrant/resources/example.conf /etc/apache2/sites-available/000-default.conf
@@ -90,8 +83,8 @@ apache_configurations() {
 mariadb_install() {
   local root_password="root"
 
-  echo "maria-db-10.1 mysql-server/root_password password $root_password" | sudo debconf-set-selections
-  echo "maria-db-10.1 mysql-server/root_password_again password $root_password" | sudo debconf-set-selections
+  echo "maria-db-10.3 mysql-server/root_password password $root_password" | sudo debconf-set-selections
+  echo "maria-db-10.3 mysql-server/root_password_again password $root_password" | sudo debconf-set-selections
   sudo apt-get install -y mariadb-server
 
   # Run MySQL without passwords for convenience
@@ -109,14 +102,15 @@ EOF
 }
 
 phpfpm_install() {
-  sudo apt-get install -y php7.0-fpm \
-    php7.0-cli php7.0-common php7.0-curl \
-    php7.0-gd php7.0-json php7.0-mbstring php7.0-mcrypt php7.0-mysql php7.0-xml php7.0-xmlrpc php7.0-zip php-pear
-  sudo cp /vagrant/resources/custom-php.ini /etc/php/7.0/mods-available/
+  sudo apt-get install -y php7.2-fpm \
+    php7.2-cli php7.2-common php7.2-curl \
+    php7.2-gd php7.2-imap php7.2-json php7.2-mbstring php7.2-mysql php7.2-xml \
+    php7.2-xmlrpc php7.2-zip php-imagick php-pear
+  sudo cp /vagrant/resources/custom-php.ini /etc/php/7.2/mods-available/
   sudo phpenmod custom-php
   
   # explicitly restart php
-  sudo service php7.0-fpm restart &> /dev/null
+  sudo service php7.2-fpm restart &> /dev/null
 }
 
 composer_install() {

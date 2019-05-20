@@ -1,9 +1,9 @@
 # wp-scratch-box
-***v3.1.x***  
+***v4.0.x***  
 
 ## Description
 Quick Vagrant box for WordPress. Configurable and with support for Vagrant Multi-Machine.   
-Suitable for presentations, workshops, ... and minor development.   
+Suitable for presentations, workshops, ... and minor development of course!   
 
 
 ## Usage
@@ -19,9 +19,9 @@ Visit `http://172.16.0.12` in your browser, you will be greeted by the five minu
 - [Virtualbox](https://www.virtualbox.org/) ( 5.0 > )
 
 ### Roadmap
-- v3.x.x: moving provisioning to Ansible, PHP version bump, MariaDB, ...
+- https w/ Let's Encrypt (help wanted!).
 - Looking for contributions and input on the PHP, APACHE || `.htaccess` file and MySQL configurations.
-- A VMWare provisioner for the `Vagranfile`.
+- A VMWare provisioner for the `Vagranfile`?
 - Suggestions and improvements can be discussed in the issue tracker/through PR.
 
 ## Vagrant Configuration
@@ -43,8 +43,8 @@ Vagrant configuration can be set in `Vagrant.json`. Current configuration option
 #### Synced folder
 | "synced_folder" | path |
 | --------------- |:----:|
-| "host_path" | "project/" |
-| "guest_path" | "/var/www/project/public" |
+| "host_path" | "src/" |
+| "guest_path" | "/var/www/public" |
 
 Vagrant will create the `host_path` folder if it doesn't exist. The main Host directory will be synced to `/vagrant` per Vagrants' defaults.
 
@@ -54,10 +54,10 @@ if you have vagrant-cachier installed, the config in the Vagrantfile is set to c
 ### wp-scratch-box.sh
 This is the provisioning file.
 - **packages:**
-  - ansible
   - composer
   - curl
   - git-core
+  - imagemagick
   - jq
   - ntp
   - software-properties-common
@@ -67,7 +67,7 @@ This is the provisioning file.
   - wp-cli w/ tab completions
 - **LAMP**
 	- Apache 2.4
-		- Document root: `/var/www/project/public`
+		- Document root: `/var/www/public`
 	- MySQL 5.5
 		- root user: `root`
 		- root password: `root`
@@ -91,7 +91,7 @@ Latest stable version downloaded through WP-CLI.
 | Parameters | WP-CLI | Default |
 |------------|--------|:-------:|
 | $public_directory | *core parent directory* | public |
-| $core_directory | --path | **.** |
+| $root_directory | --path | **.** |
 | $mysql_database | --dbname | wp_dummy |
 | $mysql_user | --dbuser | wp |
 | $mysql_password | --dbpass | wp |
@@ -105,7 +105,7 @@ In `Vagrant.json` add the following JSON array:
     ... ,
 	"wordpress":[
 		"$public_directory",
-		"$core_directory", "$mysql_database", 
+		"$root_directory", "$mysql_database", 
 		"$mysql_user", "$mysql_password", "$mysql_prefix"
 	]
   }
@@ -117,13 +117,13 @@ These will be read by JQ at provisioning.
 - Don't forget to replace *$parameter* by your own value!
 - Object for your custom parameters must be set to `"wordpress"` in `Vagrant.json`.
 - Following the parameters order in the JSON array is required.
-- If you change `$public_directory` `$core_directory`, set the synced folder path accordingly in `Vagrant.json` and vice-versa.
-- Default `$public_directory` refers to `/var/www/project/$public_directory`.
-- Default `$core_directory` is a **dot**, referencing `/var/www/project/$public_directory/$core_directory`.
+- If you change `$public_directory` `$root_directory`, set the synced folder path accordingly in `Vagrant.json` and vice-versa.
+- Default `$public_directory` refers to `/var/www/$public_directory`.
+- Default `$root_directory` is a **dot**, referencing `/var/www/$public_directory/$root_directory`.
 
 #### Default folder structure
 ```
-/var/www/project/  
+/var/www/  
 +-- public/  
 |	+-- .htaccess
 |	+-- index.php

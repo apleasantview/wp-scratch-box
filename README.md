@@ -67,7 +67,8 @@ Vagrant configuration can be set in `Vagrant.json`. Current configuration option
 Vagrant will create the `host_path` folder if it doesn't exist. The main Host directory will be synced to `/vagrant` per Vagrants' defaults.
 
 ### Vagrant plugins
-if you have vagrant-cachier installed, the config in the Vagrantfile is set to cache by machine.
+If you have vagrant-cachier installed, the config in the Vagrantfile is set to cache by machine.
+If you have vagrant-vbguest installed, guest additions updates is set to `false`. Manually update guest additions if needed.
 
 ### wp-scratch-box.sh
 This is the provisioning file.

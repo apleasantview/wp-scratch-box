@@ -37,7 +37,6 @@ Visit `http://172.16.0.12` in your browser, you will be greeted by the five minu
 - [Virtualbox](https://www.virtualbox.org/) ( 5.0 > )
 
 ### Roadmap
-- https w/ Let's Encrypt (help wanted!).
 - Looking for contributions and input on the PHP, APACHE || `.htaccess` file and MySQL configurations.
 - A VMWare provisioner for the `Vagrantfile`?
 - Suggestions and improvements can be discussed in the issue tracker/through PR.

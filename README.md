@@ -52,7 +52,7 @@ Vagrant configuration can be set in `Vagrant.json`. Current configuration option
 | "name" | "vm.define", "vm.provider.name" | wp-scratch-box |
 | "vagrant_box" | "vm.box" | ubuntu/bionic64 |
 | "box_ip" | "vm.network" | 172.16.0.12 |
-| "box_hostname" | "vm.hostname" | wp-scratch.box |
+| "box_hostname" | "vm.hostname" | wp-scratch-box.test |
 | "vb_cpus" | "vb.cpus" | 2 |
 | "vb_memory" | "vb.memory" | 1024 |
 | "vb_linked_clone" | "vb.linked_clone" | true |

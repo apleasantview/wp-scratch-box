@@ -74,7 +74,7 @@ apache_configurations() {
   sudo a2enconf php7.2-fpm
   sudo service apache2 restart
 
-  sudo cp /vagrant/resources/example.conf /etc/apache2/sites-available/000-default.conf
+  sudo cp /vagrant/resources/wp-scratch-box.conf /etc/apache2/sites-available/000-default.conf
   sudo service apache2 reload
 
   sudo usermod -a -G www-data vagrant

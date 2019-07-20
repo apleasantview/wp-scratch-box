@@ -1,5 +1,6 @@
 .idea/
 .vagrant/
+node_modules/
 
 # Common project folders
 content/

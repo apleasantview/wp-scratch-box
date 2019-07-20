@@ -1,15 +1,17 @@
 {
   "Project": {
-    "name": "wp-scratch-box",
-    "vagrant_box": "ubuntu/bionic64",
-    "box_ip": "172.16.0.12",
-    "box_hostname": "wp-scratch-box.test",
-    "vb_cpus": "2",
-    "vb_memory": "1024",
-    "vb_linked_clone": "true",
-    "synced_folder": {
-      "host_path": "src/",
-      "guest_path": "/var/www/public"
+    "vagrant": {
+      "name": "wp-scratch-box",
+      "vagrant_box": "ubuntu/bionic64",
+      "box_ip": "172.16.0.12",
+      "box_hostname": "wp-scratch-box.test",
+      "vb_cpus": "2",
+      "vb_memory": "1024",
+      "vb_linked_clone": "true",
+      "synced_folder": {
+        "host_path": "src/",
+        "guest_path": "/var/www/public"
+      }
     }
   }
 }

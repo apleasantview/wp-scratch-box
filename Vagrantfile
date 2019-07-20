@@ -4,43 +4,45 @@ dir = File.dirname(File.expand_path(__FILE__))
 
 require 'json'
 json = File.read("#{dir}/Vagrant.json")
-set = JSON.parse(json)
-alt_box = set.has_key?("Custom")
+parser = JSON.parse(json)
+set = parser['Project']
+alt_box = parser.has_key?("Custom")
 
 Vagrant.configure(2) do |config|
   config.ssh.forward_agent = true
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
-  config.vm.define set['Project']['name'] do |project|
-    project.vm.box = set['Project']['vagrant_box']
-    if !set['Project']['box_hostname'].empty?
-      project.vm.hostname= set['Project']['box_hostname']
+  config.vm.define set['vagrant']['name'] do |project|
+    project.vm.box = set['vagrant']['vagrant_box']
+    if !set['vagrant']['box_hostname'].empty?
+      project.vm.hostname= set['vagrant']['box_hostname']
     end
     project.vm.provider "virtualbox" do |vb|
-      vb.name = set['Project']['name']
-      vb.cpus = set['Project']['vb_cpus']
-      vb.memory = set['Project']['vb_memory']
-      vb.linked_clone = set['Project']['vb_linked_clone']
+      vb.name = set['vagrant']['name']
+      vb.cpus = set['vagrant']['vb_cpus']
+      vb.memory = set['vagrant']['vb_memory']
+      vb.linked_clone = set['vagrant']['vb_linked_clone']
     end
-    project.vm.network "private_network", ip: set['Project']['box_ip']
+    project.vm.network "private_network", ip: set['vagrant']['box_ip']
     project.vm.provision "shell", path: "wp-scratch-box.sh", privileged: false
-    project.vm.synced_folder set['Project']['synced_folder']['host_path'], set['Project']['synced_folder']['guest_path'],
+    project.vm.synced_folder set['vagrant']['synced_folder']['host_path'], set['vagrant']['synced_folder']['guest_path'],
       create: true, owner: "vagrant", group: "www-data", :mount_options => ['dmode=775', 'fmode=664']
   end
 
   if alt_box == true
-    config.vm.define set['Project']['name'], autostart: false
-    config.vm.define set['Custom']['name'] do |custom|
-      custom.vm.box = set['Custom']['vagrant_box']
-      if !set['Custom']['box_hostname'].empty?
-        custom.vm.hostname= set['Custom']['box_hostname']
+    alt = parser['Custom']
+    config.vm.define set['vagrant']['name'], autostart: false
+    config.vm.define alt['vagrant']['name'] do |custom|
+      custom.vm.box = alt['vagrant']['vagrant_box']
+      if !alt['vagrant']['box_hostname'].empty?
+        custom.vm.hostname= alt['vagrant']['box_hostname']
       end
       custom.vm.provider "virtualbox" do |vb|
-        vb.name = set['Custom']['name']
-        vb.cpus = set['Custom']['vb_cpus']
-        vb.memory = set['Custom']['vb_memory']
-        vb.linked_clone = set['Custom']['vb_linked_clone']
+        vb.name = alt['vagrant']['name']
+        vb.cpus = alt['vagrant']['vb_cpus']
+        vb.memory = alt['vagrant']['vb_memory']
+        vb.linked_clone = alt['vagrant']['vb_linked_clone']
       end
-      custom.vm.network "private_network", ip: set['Custom']['box_ip']
+      custom.vm.network "private_network", ip: alt['vagrant']['box_ip']
     end
   end
   

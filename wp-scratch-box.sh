@@ -3,7 +3,7 @@
 #description    :provisioning script for wp-scratch-box
 #author         :Cristovao Verstraeten
 #date           :20151120
-#version        :4.0.0
+#version        :see CHANGELOG.md
 #usage          :vagrant up --provision, vagrant provision
 #notes          :
 #bash_version   :4.3.39(3)-release

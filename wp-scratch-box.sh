@@ -155,5 +155,9 @@ wordpress() {
 }
 
 main
+
+printf "\n========\n"
+printf "\n\tProvisioning script finished without errors.\n"
+printf "\tVisit http://172.16.0.12 for the 5 minute install!\n"
+printf "\t\tHave a pleasant view!\n"
 echo " "
-printf "Provisioning script finished without errors.\nHave a pleasant view!\n"

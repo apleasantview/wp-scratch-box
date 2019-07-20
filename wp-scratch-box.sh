@@ -17,7 +17,6 @@ main() {
   base_packages
   lamp_install
   composer_install
-  wp_custom=($(jq -r 'if .Project.wordpress then .Project.wordpress|.[] else empty end' /vagrant/Vagrant.json))
   wordpress
   # set +x
 }
@@ -127,25 +126,31 @@ wpcli_error_handler() {
 }
 
 wordpress() {
-  local public_directory=${wp_custom[0]:-public}
-  local root_directory=${wp_custom[1]:-.}
-  local mysql_database=${wp_custom[2]:-wp_dummy}
-  local mysql_user=${wp_custom[3]:-wp}
-  local mysql_password=${wp_custom[4]:-wp}
-  local mysql_prefix=${wp_custom[5]:-wp_}
+  local parser=$(jq -r 'if .Project.wordpress then .Project.wordpress|to_entries|map("\(.key)=\(.value|tostring)")| .[] else empty end' /vagrant/Vagrant.json)
+  declare -A wp_custom
+  while IFS="=" read -r key value; do
+    wp_custom[$key]="$value";
+  done < <(echo "$parser")
+
+  local root_directory=${wp_custom[root_directory]:-public}
+  local core_directory=${wp_custom[core_directory]:-.}
+  local mysql_database=${wp_custom[mysql_database]:-wp_dummy}
+  local mysql_user=${wp_custom[mysql_user]:-wp}
+  local mysql_password=${wp_custom[mysql_password]:-wp}
+  local mysql_prefix=${wp_custom[mysql_prefix]:-wp_}
 
   mysql -u root -e "CREATE DATABASE IF NOT EXISTS $mysql_database;"
   mysql -u root -e "GRANT ALL PRIVILEGES ON $mysql_database.* TO $mysql_user@localhost IDENTIFIED BY '$mysql_password';"
 
-  mkdir -p "/var/www/$public_directory"
+  mkdir -p "/var/www/$root_directory"
   (
     trap 'wpcli_error_handler' ERR
 
-    cd "/var/www/$public_directory"
+    cd "/var/www/$root_directory"
     wp cli version
-    wp core download --path="$root_directory/" 2> /dev/null
-    wp core config --path="$root_directory/" --dbname="$mysql_database" --dbuser="$mysql_user" --dbpass="$mysql_password" --dbprefix="$mysql_prefix"
-    wp core version --path="$root_directory/" --extra
+    wp core download --path="$core_directory/" 2> /dev/null
+    wp core config --path="$core_directory/" --dbname="$mysql_database" --dbuser="$mysql_user" --dbpass="$mysql_password" --dbprefix="$mysql_prefix"
+    wp core version --path="$core_directory/" --extra
   )
 }
 

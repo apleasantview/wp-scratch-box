@@ -12,6 +12,12 @@
         "host_path": "src/",
         "guest_path": "/var/www/public"
       }
+    },
+    "wordpress": {
+      "mysql_database": "wp_dummy",
+      "mysql_user": "wp",
+      "mysql_password": "wp",
+      "mysql_prefix": "wp_"
     }
   }
 }

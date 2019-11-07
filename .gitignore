@@ -1,8 +1,15 @@
+# General ignores
 .idea/
 .vagrant/
 node_modules/
 
 # Common project folders
+backup/
+bkp/
 content/
 project/
 src/
+temp/
+
+# Common project files
+database/*.sql

@@ -126,7 +126,9 @@ wpcli_error_handler() {
 }
 
 wordpress() {
-  local parser=$(jq -r 'if .Project.wordpress then .Project.wordpress|to_entries|map("\(.key)=\(.value|tostring)")| .[] else empty end' /vagrant/Vagrant.json)
+  local parser
+  parser=$(jq -r 'if .Project.wordpress then .Project.wordpress|to_entries|map("\(.key)=\(.value|tostring)")| .[] else empty end' /vagrant/Vagrant.json)
+  
   declare -A wp_custom
   while IFS="=" read -r key value; do
     wp_custom[$key]="$value";

@@ -1,31 +1,40 @@
 # wp-scratch-box
 ![GitHub tag (latest by date)](https://img.shields.io/github/tag-date/apleasantview/wp-scratch-box.svg?label=release) [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
-## Description
+## ℹ️ Description
 A quick and disposable Vagrant box for WordPress.   
 It is suitable for a range of activities like presentations, workshops and development.
-> 🎉 v5.0.0!   
-This release mainly aims to improve the user experience of this tool. Configuration is more explicit for verbosity and the documentation revised. Releases are now prefixed and comes paired with a generated changelog.
 
-## Table of Contents 🔖
+---
+
+## 🔖 Table of Contents
 - [Usage](#usage)
   * [Minimum Requirements](#minimum-requirements)
+- [Provisioning](#provisioning)
+  * [wp-scratch-box.sh](#wp-scratch-boxsh)
 - [Configuration](#configuration)
-  * [Vagrant](#vagrant)
-    + [Vagrant.json](#vagrantjson)
-      - [Synced folder](#synced-folder)
-    + [Provisioning](#provisioning)
+  * [Vagrant.json](#vagrantjson)
+    + [Default Vagrant configuration](#default-vagrant-configuration)
+      - [Synced folder object:](#synced-folder-object-)
   * [WordPress Configuration](#wordpress-configuration)
+    + [Default WordPress configuration](#default-wordpress-configuration)
     + [Optional parameters](#optional-parameters)
-    + [Default folder structure](#default-folder-structure)
-  * [Resources (folder)](#resources--folder-)
+  * [LAMP default directory structure](#lamp-default-directory-structure)
+  * [Resources (directory)](#resources--directory-)
+  * [Database (directory)](#database--directory-)
+  * [Scripts (directory)](#scripts--directory-)
   * [Vagrant plugins](#vagrant-plugins)
-- [Vagrant Multi-Machine](#vagrant-multi-machine)
-  * [Multi-Machine Configuration](#multi-machine-configuration)
-- [Roadmap](#roadmap)
+- [Configuration Warning](#configuration-warning)
+- [Advanced Configuration](#advanced-configuration)
+  * [Vagrant Multi-Machine](#vagrant-multi-machine)
+    + [Muti-Machine configuration](#muti-machine-configuration)
+  * [Multi-Machine Warning](#multi-machine-warning)
+- [Contribute to `wp-scratch-box`](#contribute-to--wp-scratch-box-)
 - [License](#license)
 
-## Usage ⌨️
+---
+
+## ⌨️ Usage
 ```
 git clone https://github.com/apleasantview/wp-scratch-box.git
 cd wp-scratch-box
@@ -37,11 +46,33 @@ Visit `http://172.16.0.12` in your browser, you will be greeted by the five minu
 - [Vagrant](https://www.vagrantup.com/) ( 1.7.4 > )
 - [Virtualbox](https://www.virtualbox.org/) ( 5.0 > )
 
-## Configuration 🔧
-### Vagrant
-#### Vagrant.json
-Vagrant configuration can be set in `Vagrant.json`. Current configuration options are:
+## 📜 Provisioning
+### wp-scratch-box.sh
+This is the provisioning file that will install the following packages and LAMP stack:
+- **Packages:**
+  - composer
+  - curl
+  - git-core
+  - imagemagick
+  - jq
+  - ntp
+  - software-properties-common
+  - unzip
+  - vim
+  - zip
+  - wp-cli w/ tab completions
+- **LAMP**
+  - Apache 2.4
+  - MariaDB 10.3
+  - PHP-FPM 7.2
+- **WordPress**
+  - Latest stable version downloaded with WP-CLI.
 
+##  🔧 Configuration
+### Vagrant.json
+Vagrant configuration can be modified in `Vagrant.json`, inside the `vagrant` object.
+
+#### Default Vagrant configuration
 | Config key | Vagrant setting | Default |
 |-------------|---------|-------:|
 | "name" | "vm.define", "vm.provider.name" | wp-scratch-box |
@@ -59,32 +90,7 @@ Vagrant configuration can be set in `Vagrant.json`. Current configuration option
 | "host_path" | "src/" |
 | "guest_path" | "/var/www/public" |
 
-Vagrant will create the `host_path` folder if it doesn't exist. The root Host directory will be synced to `/vagrant` per Vagrants' defaults. Note that there is no '/' at the end of the `guest_path`.
-
-#### Provisioning
-`wp-scratch-box.sh`  
-This is the provisioning file that will install the following packages and LAMP stack:
-- **packages:**
-  - composer
-  - curl
-  - git-core
-  - imagemagick
-  - jq
-  - ntp
-  - software-properties-common
-  - unzip
-  - vim
-  - zip
-  - wp-cli w/ tab completions
-- **LAMP**
-	- Apache 2.4
-		- Document root: `/var/www/public`
-	- MariaDB 10.3
-		- root user: `root`
-		- root password: `root`
-	- PHP-FPM 7.2
-- **WordPress**
-	- *See below*
+Vagrant will create the `host_path` folder if it doesn't exist. The root directory will be synced to `/vagrant` per Vagrants' defaults, giving you access to any other folders and files needed. Note that there is no '/' at the end of the `guest_path`.
 
 ### WordPress Configuration
 The latest stable version of WordPress is downloaded and configured through WP-CLI.
@@ -105,12 +111,8 @@ In `Vagrant.json` modify the values of the `wordpress` object:
   }
 }
 ```
-These will be read by the [jq utility](https://stedolan.github.io/jq/) at provisioning and passed on to WP-CLI and the `mysql` command to set up your database.
-
-#### Optional parameters
-The `root_directory` and `core_directory` parameters are completely optional. These are mostly used in an advanced setup where WP Core is installed in its own directory. See this [Codex page](https://wordpress.org/support/article/giving-wordpress-its-own-directory/) for more info. 
-
-Below is a table with how the parameters relate to configuration and WP-CLI:
+#### Default WordPress configuration
+These values will be read by the [jq utility](https://stedolan.github.io/jq/) at provisioning and passed on to WP-CLI and the `mysql` command to set up your database.
 
 | Parameters | WP-CLI | Default | Set in Vagrant.json |
 |:-----------|:------:|:-------:|---:|
@@ -121,13 +123,12 @@ Below is a table with how the parameters relate to configuration and WP-CLI:
 | mysql_password | --dbpass | wp | required |
 | mysql_prefix | --dbprefix | wp_ | required |
 
-**⚠️ Warning:**  
-If you should change the `root_directory` and `core_directory` parameters:
-- Make sure `guest_path` is set accordingly in the `vagrant` configuration part of `Vagrant.json`.
-- You will need to change paths in the apache configuration `wp-scratch-box.conf` in the `resources` folder.
-- Do not put a '/' at the front or end of these values.
+#### Optional parameters
+The `root_directory` and `core_directory` parameters are completely optional. These are mostly used in an advanced setup where WP Core is installed in its own directory. See this [Codex page](https://wordpress.org/support/article/giving-wordpress-its-own-directory/) for more info. 
 
-#### Default folder structure
+### LAMP default directory structure
+See above to modify where/how your site is served.
+
 ```
 /var/www/  
 +-- public/  
@@ -138,7 +139,8 @@ If you should change the `root_directory` and `core_directory` parameters:
 |	+-- wp-content/
 |	+-- wp-include/
 ```
-### Resources (folder)
+
+### Resources (directory)
 Contains configuration files used during provisioning for Apache and PHP:  
 `.htaccess` - `wp-scratch-box.conf` - `custom-php.ini`.
   
@@ -146,15 +148,27 @@ Please review these files and make adjustments accordingly if you change any def
 
 ~~The `resources` folder also has a Mailcatcher installation script.~~ *Mailcatcher is deprecated. The script is still present but unlikely to work. It will be removed in the future for sure.*
 
+### Database (directory)
+A place to store your database(s). See README file in directory.
+
+### Scripts (directory)
+A place to story your custom scripts. See README file in directory.
+
 ### Vagrant plugins
 If you have `vagrant-cachier` installed, the config in the Vagrantfile is set to cache by machine.
 If you have `vagrant-vbguest` installed, guest additions updates is set to `false`. Manually update guest additions if really needed.
 
-## Vagrant Multi-Machine ⚒️
-<small>***for advanced users***</small>   
+## ⚠️ Configuration Warning
+If you should change the `root_directory` and `core_directory` parameters in `Vagrant.json`:
+- Make sure `guest_path` is set accordingly in the `vagrant` configuration part of `Vagrant.json`.
+- You will need to change paths in the apache configuration `wp-scratch-box.conf`, file is in the `resources` folder.
+- Do not put a '/' at the front or end of these values.
+
+## ⚒️ Advanced Configuration
+### Vagrant Multi-Machine
 By leveraging Vagrant's Multi-Machine feature, you can hook up an additional virtual machine or re-packaged boxes from VVV, Primary Vagrant, etc. alongside the main `Project` VM.
 
-### Muti-Machine Configuration
+#### Muti-Machine configuration
 In `Vagrant.json` append the following Parent Object:
 ```json
 {
@@ -171,7 +185,7 @@ In `Vagrant.json` append the following Parent Object:
 ```
 Follow with command `vagrant up`
 
-**Notes:** 
+### ⚠️ Multi-Machine Warning 
 - All keys are required and Parent Object must be set to `"Custom"` in `Vagrant.json`.
 - The default `Project`machine will **not** start and be provisioned. You can force it to start with the command `vagrant up NAME`.
 - If you run both `Project` and `Custom`, setting their IP's in the same range will create a network and facilitate communication between the two machines.
@@ -179,11 +193,11 @@ Follow with command `vagrant up`
 
 ***Please refer to the [Vagrant docs](https://docs.vagrantup.com/v2/multi-machine/index.html) for more info on Multi-Machine setups.***
 
-## Roadmap
+## 🎉 Contribute to `wp-scratch-box`
 - Open to any sort of contributions.
 - Suggestions and improvements can be discussed in the issue tracker/through PR.
 
-## License
+## ⚖️ License
 Released under the MIT license.  
 *2015 - 2019 a pleasant view | Cristovao Verstraeten*  
 <br>

@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.1.0](https://github.com/apleasantview/wp-scratch-box/compare/v5.0.0...v5.1.0) (2019-11-07)
+
+
+### Features
+
+* Introduce db and scripts directory ([9b56257](https://github.com/apleasantview/wp-scratch-box/commit/9b56257802f4032215043817baa01aef923a5faf))
+
+
+### Documentation
+
+* Review and document new features ([1c9ccb7](https://github.com/apleasantview/wp-scratch-box/commit/1c9ccb7050bd02aeff6f32874b5c01d8199df99c))
+
+
+### Code Refactoring
+
+* **Provisioning:** Declare and assign separately parser variable in wp function ([da7527d](https://github.com/apleasantview/wp-scratch-box/commit/da7527d73474733849ccd08297aee1afa27b63f4))
+
+
+### Miscellaneous Chores
+
+* Ugrade standard-version ([0963eac](https://github.com/apleasantview/wp-scratch-box/commit/0963eac988f80c1f015783fbf8d2ef10ee89d979))
+* Update project ignores ([698071a](https://github.com/apleasantview/wp-scratch-box/commit/698071a51d2fbf645c1f22f34dc3b9d3b81b312c))
+
 ## 5.0.0 (2019-07-20)
 
 

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.1.1](https://github.com/apleasantview/wp-scratch-box/compare/v5.1.0...v5.1.1) (2020-04-20)
+
+
+### Bug Fixes
+
+* **Provisioning:** Set restart services without asking to true ([25caac7](https://github.com/apleasantview/wp-scratch-box/commit/25caac7eec981eb013fbfc4671302e9084a9f79b))
+
 ## [5.1.0](https://github.com/apleasantview/wp-scratch-box/compare/v5.0.0...v5.1.0) (2019-11-07)
 
 

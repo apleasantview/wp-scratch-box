@@ -28,6 +28,7 @@ additional_repos() {
 }
 
 base_packages() {
+  echo '* libraries/restart-without-asking boolean true' | sudo debconf-set-selections
   sudo apt-get update && sudo apt-get install -y \
     curl \
     git-core \

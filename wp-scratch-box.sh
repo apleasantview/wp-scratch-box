@@ -21,10 +21,14 @@ main() {
   # set +x
 }
 
-additional_repos() {  
+additional_repos() {
   # MariaDB
   sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
   sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://ftp.nluug.nl/db/mariadb/repo/10.3/ubuntu bionic main'
+
+  # PHP and Apache by Ondrej Sury
+  sudo add-apt-repository ppa:ondrej/php
+  sudo add-apt-repository ppa:ondrej/apache2
 }
 
 base_packages() {
@@ -71,7 +75,7 @@ apache_install() {
 
 apache_configurations() {
   sudo a2enmod expires headers proxy proxy_fcgi rewrite setenvif
-  sudo a2enconf php7.2-fpm
+  sudo a2enconf php7.4-fpm
   sudo service apache2 restart
 
   sudo cp /vagrant/resources/wp-scratch-box.conf /etc/apache2/sites-available/000-default.conf
@@ -102,15 +106,15 @@ EOF
 }
 
 phpfpm_install() {
-  sudo apt-get install -y php7.2-fpm \
-    php7.2-cli php7.2-common php7.2-bcmath php7.2-curl \
-    php7.2-gd php7.2-imap php7.2-json php7.2-mbstring php7.2-mysql php7.2-soap \
-    php7.2-xml php7.2-xmlrpc php7.2-zip php-imagick php-pear
-  sudo cp /vagrant/resources/custom-php.ini /etc/php/7.2/mods-available/
+  sudo apt-get install -y php7.4-fpm \
+    php7.4-cli php7.4-common php7.4-bcmath php7.4-curl \
+    php7.4-gd php7.4-imap php7.4-json php7.4-mbstring php7.4-mysql php7.4-soap \
+    php7.4-xml php7.4-xmlrpc php7.4-zip php-imagick php-pear
+  sudo cp /vagrant/resources/custom-php.ini /etc/php/7.4/mods-available/
   sudo phpenmod custom-php
   
   # explicitly restart php
-  sudo service php7.2-fpm restart &> /dev/null
+  sudo service php7.4-fpm restart &> /dev/null
 }
 
 composer_install() {
@@ -118,6 +122,7 @@ composer_install() {
   composer --version
   
   # fix 'permission denied' with vagrant-cachier symlink
+  mkdir /home/vagrant/.composer
   sudo chown -R vagrant:vagrant /home/vagrant/.composer
 }
 

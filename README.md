@@ -64,7 +64,7 @@ This is the provisioning file that will install the following packages and LAMP 
 - **LAMP**
   - Apache 2.4
   - MariaDB 10.3
-  - PHP-FPM 7.2
+  - PHP-FPM 7.4
 - **WordPress**
   - Latest stable version downloaded with WP-CLI.
 

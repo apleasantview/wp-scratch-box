@@ -1,6 +1,6 @@
 {
   "name": "wp-scratch-box",
-  "version": "5.1.3",
+  "version": "5.2.0",
   "description": "Versioning and changelog generation",
   "main": "index.js",
   "scripts": {

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.2.0](https://github.com/apleasantview/wp-scratch-box/compare/v5.1.3...v5.2.0) (2021-01-14)
+
+
+### Features
+
+* **PHP:** Update PHP to 7.4 ([40a91a5](https://github.com/apleasantview/wp-scratch-box/commit/40a91a50b05beca17d34e1e4064e357e0fb1e38a))
+
 ### [5.1.3](https://github.com/apleasantview/wp-scratch-box/compare/v5.1.2...v5.1.3) (2021-01-14)
 
 ### [5.1.2](https://github.com/apleasantview/wp-scratch-box/compare/v5.1.1...v5.1.2) (2020-04-20)

@@ -167,5 +167,6 @@ main
 printf "\n========\n"
 printf "\n\tProvisioning script finished without errors.\n"
 printf "\tVisit http://172.16.0.12 for the 5 minute install!\n"
+printf "\tIf you would like to access the site from a custom URL, add it to your hosts file.\n"
 printf "\t\tHave a pleasant view!\n"
 echo " "

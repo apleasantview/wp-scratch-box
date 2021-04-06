@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.2.2](https://github.com/apleasantview/wp-scratch-box/compare/v5.2.1...v5.2.2) (2021-04-06)
+
+
+### Bug Fixes
+
+* formatting error in versionrc ([9e0a490](https://github.com/apleasantview/wp-scratch-box/commit/9e0a490c5b660fb25de38d7faf944ecf6636e6a1))
+
 ### [5.2.1](https://github.com/apleasantview/wp-scratch-box/compare/v5.2.0...v5.2.1) (2021-04-06)
 
 

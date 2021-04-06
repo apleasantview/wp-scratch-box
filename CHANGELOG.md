@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.2.1](https://github.com/apleasantview/wp-scratch-box/compare/v5.2.0...v5.2.1) (2021-04-06)
+
+
+### Features
+
+* Add note about host file config ([8699e68](https://github.com/apleasantview/wp-scratch-box/commit/8699e68ff821471772110bbcff11ceb1bb660dd5))
+* **PHP:** Beef up PHP config values ([09b2e16](https://github.com/apleasantview/wp-scratch-box/commit/09b2e16cd1457cc66833a83641c9a3d68c4c52b0))
+
+
+### Bug Fixes
+
+* **Provisioning:** Imagick lib needed PHP version ([5b472fa](https://github.com/apleasantview/wp-scratch-box/commit/5b472fa912d01b6158169014382f4f6c2757bfdf))
+
+
+### Miscellaneous Chores
+
+* Update standard-version and rc formatting ([e7a0843](https://github.com/apleasantview/wp-scratch-box/commit/e7a0843b5fb613b9cadf794650c1ccd3836ac8e7))
+
 ## [5.2.0](https://github.com/apleasantview/wp-scratch-box/compare/v5.1.3...v5.2.0) (2021-01-14)
 
 

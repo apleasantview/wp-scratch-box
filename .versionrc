@@ -45,5 +45,5 @@
       "section": "Continuous Integration"
     }
   ],
-  "releaseCommitMessageFormat": "release: v%s"
+  "releaseCommitMessageFormat": "release: v{{currentTag}}"
 }

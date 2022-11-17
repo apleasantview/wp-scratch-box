@@ -4,7 +4,7 @@
   "description": "Versioning and changelog generation",
   "main": "index.js",
   "scripts": {
-    "release": "standard-version",
+    "release": "commit-and-tag-version",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,6 +19,6 @@
   "homepage": "https://github.com/apleasantview/wp-scratch-box#readme",
   "private": true,
   "dependencies": {
-    "standard-version": "^9.1.1"
+    "commit-and-tag-version": "^10.1.0"
   }
 }

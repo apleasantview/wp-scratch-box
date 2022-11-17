@@ -62,9 +62,9 @@ This is the provisioning file that will install the following packages and LAMP 
   - zip
   - wp-cli w/ tab completions
 - **LAMP**
-  - Apache 2.4
-  - MariaDB 10.3
-  - PHP-FPM 7.4
+  - Apache2
+  - MariaDB 10.6
+  - PHP-FPM 8.0
 - **WordPress**
   - Latest stable version downloaded with WP-CLI.
 
@@ -80,7 +80,7 @@ Vagrant configuration can be modified in `Vagrant.json`, inside the `vagrant` ob
 | "box_ip" | "vm.network" | 172.16.0.12 |
 | "box_hostname" | "vm.hostname" | wp-scratch-box.test |
 | "vb_cpus" | "vb.cpus" | 2 |
-| "vb_memory" | "vb.memory" | 1024 |
+| "vb_memory" | "vb.memory" | 2048 |
 | "vb_linked_clone" | "vb.linked_clone" | true |
 | "synced_folder" | "vm.synced_folder"| <i>see below</i> |
 

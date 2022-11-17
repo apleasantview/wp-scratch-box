@@ -11,6 +11,8 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+PHPVERSION=${PHPVERSION:-"8.0"}
+
 main() {
   # set -x
   additional_repos
@@ -22,11 +24,11 @@ main() {
 }
 
 additional_repos() {
-  # MariaDB
-  sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-  sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://ftp.nluug.nl/db/mariadb/repo/10.3/ubuntu bionic main'
+  # MariaDB.
+  sudo curl -o /etc/apt/trusted.gpg.d/mariadb_release_signing_key.asc 'https://mariadb.org/mariadb_release_signing_key.asc'
+  sudo sh -c "echo 'deb https://ftp.nluug.nl/db/mariadb/repo/10.6/ubuntu bionic main' >>/etc/apt/sources.list"
 
-  # PHP and Apache by Ondrej Sury
+  # PHP and Apache by Ondrej Sury.
   sudo add-apt-repository ppa:ondrej/php
   sudo add-apt-repository ppa:ondrej/apache2
 }
@@ -34,6 +36,7 @@ additional_repos() {
 base_packages() {
   echo '* libraries/restart-without-asking boolean true' | sudo debconf-set-selections
   sudo apt-get update && sudo apt-get install -y \
+    apt-transport-https \
     curl \
     git-core \
     imagemagick \
@@ -75,7 +78,7 @@ apache_install() {
 
 apache_configurations() {
   sudo a2enmod expires headers proxy proxy_fcgi rewrite setenvif
-  sudo a2enconf php7.4-fpm
+  sudo a2enconf php${PHPVERSION}-fpm
   sudo service apache2 restart
 
   sudo cp /vagrant/resources/wp-scratch-box.conf /etc/apache2/sites-available/000-default.conf
@@ -87,11 +90,19 @@ apache_configurations() {
 mariadb_install() {
   local root_password="root"
 
-  echo "maria-db-10.3 mysql-server/root_password password $root_password" | sudo debconf-set-selections
-  echo "maria-db-10.3 mysql-server/root_password_again password $root_password" | sudo debconf-set-selections
+  echo "maria-db-10.6 mysql-server/root_password password $root_password" | sudo debconf-set-selections
+  echo "maria-db-10.6 mysql-server/root_password_again password $root_password" | sudo debconf-set-selections
   sudo apt-get install -y mariadb-server
 
-  # Run MySQL without passwords for convenience
+  # Revert to the old mysql_native_password authentication method. Needed from 10.4 on.
+  local revert_auth=$( cat <<-SQL
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password USING PASSWORD('root');
+FLUSH PRIVILEGES;
+SQL
+  )
+  sudo mysql -u root -proot -e "${revert_auth}"
+
+  # Run MySQL without passwords for convenience.
   (
     cat << 'EOF' | tee /home/vagrant/.my.cnf
 [client]
@@ -106,22 +117,23 @@ EOF
 }
 
 phpfpm_install() {
-  sudo apt-get install -y php7.4-fpm \
-    php7.4-cli php7.4-common php7.4-bcmath php7.4-curl \
-    php7.4-gd php7.4-imap php7.4-json php7.4-mbstring php7.4-mysql php7.4-soap \
-    php7.4-xml php7.4-xmlrpc php7.4-zip php7.4-imagick php-pear
-  sudo cp /vagrant/resources/custom-php.ini /etc/php/7.4/mods-available/
+  sudo apt-get install -y php${PHPVERSION}-fpm \
+    php${PHPVERSION}-cli php${PHPVERSION}-common php${PHPVERSION}-bcmath php${PHPVERSION}-curl \
+    php${PHPVERSION}-gd php${PHPVERSION}-imagick php${PHPVERSION}-imap php${PHPVERSION}-intl \
+    php${PHPVERSION}-mbstring php${PHPVERSION}-mysql php${PHPVERSION}-pcov php${PHPVERSION}-soap \
+    php${PHPVERSION}-ssh2 php${PHPVERSION}-xdebug php${PHPVERSION}-xml php${PHPVERSION}-xmlrpc php${PHPVERSION}-zip php-pear
+  sudo cp /vagrant/resources/custom-php.ini /etc/php/${PHPVERSION}/mods-available/
   sudo phpenmod custom-php
   
-  # explicitly restart php
-  sudo service php7.4-fpm restart &> /dev/null
+  # Explicitly restart PHP.
+  sudo service php${PHPVERSION}-fpm restart &> /dev/null
 }
 
 composer_install() {
   curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
   composer --version
   
-  # fix 'permission denied' with vagrant-cachier symlink
+  # Fix 'permission denied' with vagrant-cachier symlink.
   mkdir /home/vagrant/.composer
   sudo chown -R vagrant:vagrant /home/vagrant/.composer
 }

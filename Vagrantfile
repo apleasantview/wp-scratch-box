@@ -8,7 +8,9 @@ parser = JSON.parse(json)
 set = parser['Project']
 alt_box = parser.has_key?("Custom")
 
-Vagrant.configure(2) do |config|
+ENV["LC_ALL"] = "en_US.UTF-8"
+
+Vagrant.configure("2") do |config|
   config.ssh.forward_agent = true
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
   config.vm.define set['vagrant']['name'] do |project|
@@ -51,6 +53,6 @@ Vagrant.configure(2) do |config|
   end
 
   if Vagrant.has_plugin?("vagrant-vbguest")
-    config.vbguest.auto_update = false  
+    config.vbguest.auto_update = false
   end
 end

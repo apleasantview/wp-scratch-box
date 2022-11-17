@@ -1,6 +1,23 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
+
+## [5.3.0](https://github.com/apleasantview/wp-scratch-box/compare/v5.2.2...v5.3.0) (2022-11-17)
+
+
+### Features
+
+* **various:** Version bumps and memory increase ([c930b13](https://github.com/apleasantview/wp-scratch-box/commit/c930b13191c4a5a85b911af189fa12426bedeae0))
+
+
+### Documentation
+
+* README updated ([a1477e8](https://github.com/apleasantview/wp-scratch-box/commit/a1477e86effc05fb2650a6983776b62776c74862))
+
+
+### Miscellaneous Chores
+
+* Switch release utility ([ef0c71c](https://github.com/apleasantview/wp-scratch-box/commit/ef0c71c19fefcf12b1cb5dac8e3c01af466889cb))
 
 ### [5.2.2](https://github.com/apleasantview/wp-scratch-box/compare/v5.2.1...v5.2.2) (2021-04-06)
 

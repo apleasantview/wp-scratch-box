@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [5.4.0](https://github.com/apleasantview/wp-scratch-box/compare/v5.3.0...v5.4.0) (2023-02-24)
+
+
+### Features
+
+* LAMPS stack configuration update ([f7c08dc](https://github.com/apleasantview/wp-scratch-box/commit/f7c08dc739d7a9642a75f2227bad6806afbac27f))
+
 ## [5.3.0](https://github.com/apleasantview/wp-scratch-box/compare/v5.2.2...v5.3.0) (2022-11-17)
 
 

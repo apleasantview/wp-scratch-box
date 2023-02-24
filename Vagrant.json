@@ -1,10 +1,10 @@
 {
   "Project": {
     "vagrant": {
-      "name": "wp-scratch-box",
+      "name": "wp-scratch-box-next",
       "vagrant_box": "ubuntu/bionic64",
-      "box_ip": "172.16.0.12",
-      "box_hostname": "wp-scratch-box.test",
+      "box_ip": "172.16.0.13",
+      "box_hostname": "next.wp-scratch-box.test",
       "vb_cpus": "2",
       "vb_memory": "2048",
       "vb_linked_clone": "true",

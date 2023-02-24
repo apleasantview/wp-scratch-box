@@ -1,4 +1,12 @@
-# wp-scratch-box
+# [next] wp-scratch-box
+
+<div style="background-color: #F8F9FA; color: #000; padding 4px; border: 0.10em solid red; border-radius: 2px">
+⚠️ Warning: Development branch for V6.
+</div>
+
+<br>
+
+
 ![GitHub tag (latest by date)](https://img.shields.io/github/tag-date/apleasantview/wp-scratch-box.svg?label=release) [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
 ## ℹ️ Description

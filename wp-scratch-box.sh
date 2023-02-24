@@ -11,7 +11,7 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-PHPVERSION=${PHPVERSION:-"8.0"}
+PHPVERSION=${PHPVERSION:-"8.1"}
 
 main() {
   # set -x
@@ -20,6 +20,13 @@ main() {
   lamp_install
   composer_install
   wordpress
+
+  if [ -d "/home/vagrant/public" ];
+    then
+      echo "Symlink exists."
+    else
+      ln -s /var/www/public/ public
+  fi
   # set +x
 }
 
@@ -81,7 +88,7 @@ apache_configurations() {
   sudo a2enconf php${PHPVERSION}-fpm
   sudo service apache2 restart
 
-  sudo cp /vagrant/resources/wp-scratch-box.conf /etc/apache2/sites-available/000-default.conf
+  sudo cp /vagrant/resources/apache/wp-scratch-box.conf /etc/apache2/sites-available/000-default.conf
   sudo service apache2 reload
 
   sudo usermod -a -G www-data vagrant
@@ -121,10 +128,17 @@ phpfpm_install() {
     php${PHPVERSION}-cli php${PHPVERSION}-common php${PHPVERSION}-bcmath php${PHPVERSION}-curl \
     php${PHPVERSION}-gd php${PHPVERSION}-imagick php${PHPVERSION}-imap php${PHPVERSION}-intl \
     php${PHPVERSION}-mbstring php${PHPVERSION}-mysql php${PHPVERSION}-pcov php${PHPVERSION}-soap \
-    php${PHPVERSION}-ssh2 php${PHPVERSION}-xdebug php${PHPVERSION}-xml php${PHPVERSION}-xmlrpc php${PHPVERSION}-zip php-pear
-  sudo cp /vagrant/resources/custom-php.ini /etc/php/${PHPVERSION}/mods-available/
-  sudo phpenmod custom-php
-  
+    php${PHPVERSION}-ssh2 php${PHPVERSION}-xdebug php${PHPVERSION}-xml php${PHPVERSION}-xmlrpc php${PHPVERSION}-zip php-pear \
+    php${PHPVERSION}-memcache php${PHPVERSION}-memcached
+
+  sudo cp /vagrant/resources/php/php-fpm.conf /etc/php/${PHPVERSION}/fpm/php-fpm.conf
+  sudo cp /vagrant/resources/php/pool-www.conf /etc/php/${PHPVERSION}/fpm/pool.d/www.conf
+  sudo cp /vagrant/resources/php/custom-php.ini /etc/php/${PHPVERSION}/fpm/conf.d/php-custom.ini
+  sudo cp /vagrant/resources/php/opcache.ini /etc/php/${PHPVERSION}/fpm/conf.d/opcache.ini
+  # sudo phpenmod custom-php
+  sudo phpdismod xdebug
+  sudo phpdismod pcov
+
   # Explicitly restart PHP.
   sudo service php${PHPVERSION}-fpm restart &> /dev/null
 }
@@ -132,10 +146,16 @@ phpfpm_install() {
 composer_install() {
   curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
   composer --version
-  
+
   # Fix 'permission denied' with vagrant-cachier symlink.
-  mkdir /home/vagrant/.composer
-  sudo chown -R vagrant:vagrant /home/vagrant/.composer
+  if [ -d "/home/vagrant/.composer" ];
+    then
+      composer --version
+      echo "Composer directory exists."
+    else
+      mkdir /home/vagrant/.composer
+      sudo chown -R vagrant:vagrant /home/vagrant/.composer
+  fi
 }
 
 wpcli_error_handler() {
@@ -146,7 +166,7 @@ wpcli_error_handler() {
 wordpress() {
   local parser
   parser=$(jq -r 'if .Project.wordpress then .Project.wordpress|to_entries|map("\(.key)=\(.value|tostring)")| .[] else empty end' /vagrant/Vagrant.json)
-  
+
   declare -A wp_custom
   while IFS="=" read -r key value; do
     wp_custom[$key]="$value";

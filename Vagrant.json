@@ -2,7 +2,7 @@
   "Project": {
     "vagrant": {
       "name": "wp-scratch-box-next",
-      "vagrant_box": "ubuntu/bionic64",
+      "vagrant_box": "bento/ubuntu-18.04",
       "box_ip": "172.16.0.13",
       "box_hostname": "next.wp-scratch-box.test",
       "vb_cpus": "2",

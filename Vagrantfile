@@ -15,6 +15,7 @@ Vagrant.configure("2") do |config|
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
   config.vm.define set['vagrant']['name'] do |project|
     project.vm.box = set['vagrant']['vagrant_box']
+    project.vm.network "private_network", ip: set['vagrant']['box_ip']
     project.vm.boot_timeout = 420
     if !set['vagrant']['box_hostname'].empty?
       project.vm.hostname= set['vagrant']['box_hostname']
@@ -29,10 +30,9 @@ Vagrant.configure("2") do |config|
       vb.customize ['modifyvm', :id, '--cableconnected1', 'on']
       vb.linked_clone = set['vagrant']['vb_linked_clone']
     end
-    project.vm.network "private_network", ip: set['vagrant']['box_ip']
-    project.vm.provision "shell", path: "wp-scratch-box.sh", privileged: false
     project.vm.synced_folder set['vagrant']['synced_folder']['host_path'], set['vagrant']['synced_folder']['guest_path'],
       create: true, owner: "vagrant", group: "www-data", :mount_options => ['dmode=775', 'fmode=664']
+    project.vm.provision "shell", path: "wp-scratch-box.sh", privileged: false
   end
 
   if alt_box == true

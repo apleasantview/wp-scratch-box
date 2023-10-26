@@ -19,6 +19,7 @@ main() {
   base_packages
   lamp_install
   composer_install
+  wpcli_install
   wordpress
 
   if [ -d "/home/vagrant/public" ];
@@ -55,7 +56,6 @@ base_packages() {
     zip
 
   cp /home/vagrant/.profile /home/vagrant/.bash_profile
-  wpcli_install
 }
 
 wpcli_install() {

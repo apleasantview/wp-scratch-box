@@ -15,6 +15,7 @@ Vagrant.configure("2") do |config|
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
   config.vm.define set['vagrant']['name'] do |project|
     project.vm.box = set['vagrant']['vagrant_box']
+    project.vm.boot_timeout = 420
     if !set['vagrant']['box_hostname'].empty?
       project.vm.hostname= set['vagrant']['box_hostname']
     end

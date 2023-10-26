@@ -15,7 +15,6 @@ PHPVERSION=${PHPVERSION:-"8.1"}
 
 main() {
   # set -x
-  additional_repos
   base_packages
   lamp_install
   mailpit_install
@@ -30,12 +29,6 @@ main() {
       ln -s /var/www/public/ public
   fi
   # set +x
-}
-
-additional_repos() {
-  # PHP and Apache by Ondrej Sury.
-  sudo add-apt-repository ppa:ondrej/php
-  sudo add-apt-repository ppa:ondrej/apache2
 }
 
 base_packages() {
@@ -60,11 +53,16 @@ lamp_install() {
   mariadb_install
   phpfpm_install
 
+  # Post LAMP installation.
   apache_configurations
 }
 
 apache_install() {
-  sudo apt-get install -y \
+  # Add repository.
+  sudo add-apt-repository ppa:ondrej/apache2
+
+  # Update apt source and install quietly.
+  sudo apt-get update && sudo apt-get install -y -qq \
     apache2
 }
 
@@ -119,7 +117,11 @@ EOF
 }
 
 phpfpm_install() {
-  sudo apt-get install -y php${PHPVERSION}-fpm \
+  # Add repository.
+  sudo add-apt-repository ppa:ondrej/php
+
+  # Update apt source and install quietly.
+  sudo apt-get update && sudo apt-get install -y -qq php${PHPVERSION}-fpm \
     php${PHPVERSION}-cli php${PHPVERSION}-common php${PHPVERSION}-bcmath php${PHPVERSION}-curl \
     php${PHPVERSION}-gd php${PHPVERSION}-imagick php${PHPVERSION}-imap php${PHPVERSION}-intl \
     php${PHPVERSION}-mbstring php${PHPVERSION}-mysql php${PHPVERSION}-pcov php${PHPVERSION}-soap \

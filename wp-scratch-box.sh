@@ -33,10 +33,6 @@ main() {
 }
 
 additional_repos() {
-  # MariaDB.
-  sudo curl -o /etc/apt/trusted.gpg.d/mariadb_release_signing_key.asc 'https://mariadb.org/mariadb_release_signing_key.asc'
-  sudo sh -c "echo 'deb https://ftp.nluug.nl/db/mariadb/repo/10.6/ubuntu bionic main' >>/etc/apt/sources.list"
-
   # PHP and Apache by Ondrej Sury.
   sudo add-apt-repository ppa:ondrej/php
   sudo add-apt-repository ppa:ondrej/apache2
@@ -86,9 +82,19 @@ apache_configurations() {
 mariadb_install() {
   local root_password="root"
 
+  # First import the release signing key.
+  sudo mkdir -p /etc/apt/keyrings
+  sudo curl -o /etc/apt/keyrings/mariadb-keyring.pgp 'https://mariadb.org/mariadb_release_signing_key.pgp'
+
+  # Add source file.
+  sudo cp /vagrant/resources/mariadb/mariadb.sources /etc/apt/sources.list.d/mariadb.sources
+
+  # Set default password.
   echo "maria-db-10.6 mysql-server/root_password password $root_password" | sudo debconf-set-selections
   echo "maria-db-10.6 mysql-server/root_password_again password $root_password" | sudo debconf-set-selections
-  sudo apt-get install -y mariadb-server
+
+  # Update apt source and install quietly.
+  sudo apt-get update && sudo apt-get install -y -qq mariadb-server
 
   # Revert to the old mysql_native_password authentication method. Needed from 10.4 on.
   local revert_auth=$( cat <<-SQL

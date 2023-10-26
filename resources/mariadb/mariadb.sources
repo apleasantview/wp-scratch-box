@@ -1,0 +1,10 @@
+# MariaDB 10.6 repository list - created 2023-10-26 22:30 UTC
+# https://mariadb.org/download/
+X-Repolib-Name: MariaDB
+Types: deb
+# deb.mariadb.org is a dynamic mirror if your preferred mirror goes offline. See https://mariadb.org/mirrorbits/ for details.
+# URIs: https://deb.mariadb.org/10.6/ubuntu
+URIs: https://mariadb.mirror.wearetriple.com/repo/10.6/ubuntu
+Suites: focal
+Components: main main/debug
+Signed-By: /etc/apt/keyrings/mariadb-keyring.pgp

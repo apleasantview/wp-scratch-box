@@ -58,18 +58,6 @@ base_packages() {
   cp /home/vagrant/.profile /home/vagrant/.bash_profile
 }
 
-wpcli_install() {
-  mkdir -p /home/vagrant/wp-cli
-  (
-    cd /home/vagrant/wp-cli
-    curl -O -s -S https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-    curl -O -s -S https://raw.githubusercontent.com/wp-cli/wp-cli/master/utils/wp-completion.bash
-    chmod +x wp-cli.phar
-    sudo mv wp-cli.phar /usr/local/bin/wp
-  )
-  printf "\n%s\n" "source /home/vagrant/wp-cli/wp-completion.bash" >> .bash_profile
-}
-
 lamp_install() {
   apache_install
   mariadb_install
@@ -156,6 +144,18 @@ composer_install() {
       mkdir /home/vagrant/.composer
       sudo chown -R vagrant:vagrant /home/vagrant/.composer
   fi
+}
+
+wpcli_install() {
+  mkdir -p /home/vagrant/wp-cli
+  (
+    cd /home/vagrant/wp-cli
+    curl -O -s -S https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    curl -O -s -S https://raw.githubusercontent.com/wp-cli/wp-cli/master/utils/wp-completion.bash
+    chmod +x wp-cli.phar
+    sudo mv wp-cli.phar /usr/local/bin/wp
+  )
+  printf "\n%s\n" "source /home/vagrant/wp-cli/wp-completion.bash" >> .bash_profile
 }
 
 wpcli_error_handler() {

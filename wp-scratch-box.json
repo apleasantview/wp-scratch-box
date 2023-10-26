@@ -3,7 +3,7 @@
     "vagrant": {
       "name": "wp-scratch-box",
       "vagrant_box": "bento/ubuntu-20.04",
-      "box_ip": "172.16.0.13",
+      "box_ip": "192.168.56.4",
       "box_hostname": "wp-scratch-box.test",
       "vb_cpus": "2",
       "vb_memory": "2048",

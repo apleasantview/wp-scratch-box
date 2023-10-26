@@ -3,7 +3,7 @@
 dir = File.dirname(File.expand_path(__FILE__))
 
 require 'json'
-json = File.read("#{dir}/Vagrant.json")
+json = File.read("#{dir}/wp-scratch-box.json")
 parser = JSON.parse(json)
 set = parser['Project']
 alt_box = parser.has_key?("Custom")

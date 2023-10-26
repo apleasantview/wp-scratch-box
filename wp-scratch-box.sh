@@ -18,6 +18,7 @@ main() {
   additional_repos
   base_packages
   lamp_install
+  mailpit_install
   composer_install
   wpcli_install
   wordpress
@@ -123,12 +124,37 @@ phpfpm_install() {
   sudo cp /vagrant/resources/php/pool-www.conf /etc/php/${PHPVERSION}/fpm/pool.d/www.conf
   sudo cp /vagrant/resources/php/custom-php.ini /etc/php/${PHPVERSION}/fpm/conf.d/php-custom.ini
   sudo cp /vagrant/resources/php/opcache.ini /etc/php/${PHPVERSION}/fpm/conf.d/opcache.ini
+  sudo cp /vagrant/resources/php/mailpit.ini /etc/php/8.1/mods-available/mailpit.ini
+
   # sudo phpenmod custom-php
+  sudo phpenmod mailpit
+
   sudo phpdismod xdebug
   sudo phpdismod pcov
 
   # Explicitly restart PHP.
   sudo service php${PHPVERSION}-fpm restart &> /dev/null
+}
+
+mailpit_install() {
+  sudo bash < <(curl -sL https://raw.githubusercontent.com/axllent/mailpit/develop/install.sh)
+
+  (
+    sudo cat << 'EOF' | sudo tee /etc/systemd/system/mailpit.service
+[Unit]
+Description=Mailpit
+After=network.target
+
+[Service]
+User=vagrant
+ExecStart=/usr/bin/env /usr/local/bin/mailpit -- > /dev/null 2>&1 &
+
+[Install]
+WantedBy=multi-user.target
+EOF
+  )
+
+  sudo systemctl enable --now mailpit
 }
 
 composer_install() {

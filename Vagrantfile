@@ -22,6 +22,10 @@ Vagrant.configure("2") do |config|
       vb.name = set['vagrant']['name']
       vb.cpus = set['vagrant']['vb_cpus']
       vb.memory = set['vagrant']['vb_memory']
+      vb.customize ['modifyvm', :id, '--natdnsproxy1', 'on']
+      vb.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
+      vb.customize ['modifyvm', :id, '--ostype', 'Ubuntu_64']
+      vb.customize ['modifyvm', :id, '--cableconnected1', 'on']
       vb.linked_clone = set['vagrant']['vb_linked_clone']
     end
     project.vm.network "private_network", ip: set['vagrant']['box_ip']

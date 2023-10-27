@@ -17,6 +17,7 @@ main() {
   # set -x
   base_packages
   lamp_install
+  memcached_install
   mailpit_install
   composer_install
   wpcli_install
@@ -142,6 +143,17 @@ phpfpm_install() {
 
   # Explicitly restart PHP.
   sudo service php${PHPVERSION}-fpm restart &> /dev/null
+}
+
+memcached_install() {
+  # Update apt source and install quietly.
+  sudo apt-get update && sudo apt-get install -y -qq memcached
+
+  # Copy memcached configuration.
+  sudo cp /vagrant/resources/memcached/memcached.conf /etc/memcached.conf
+
+  # Restart memcached service.
+  sudo systemctl restart memcached
 }
 
 mailpit_install() {

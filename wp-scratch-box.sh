@@ -33,7 +33,7 @@ main() {
 
 base_packages() {
   echo '* libraries/restart-without-asking boolean true' | sudo debconf-set-selections
-  sudo apt-get update && sudo apt-get install -y \
+  sudo apt-get update && sudo apt-get install -y -qq \
     apt-transport-https \
     curl \
     git-core \

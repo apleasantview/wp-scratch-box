@@ -104,17 +104,7 @@ SQL
   sudo mysql -u root -proot -e "${revert_auth}"
 
   # Run MySQL without passwords for convenience.
-  (
-    cat << 'EOF' | tee /home/vagrant/.my.cnf
-[client]
-user     = root
-password = root
-
-[mysqladmin]
-user     = root
-password = root
-EOF
-  )
+  cp /vagrant/resources/mariadb/my.cnf /home/vagrant/.my.cnf
 }
 
 phpfpm_install() {
@@ -157,23 +147,13 @@ memcached_install() {
 }
 
 mailpit_install() {
+  # Install mailpit from install script.
   sudo bash < <(curl -sL https://raw.githubusercontent.com/axllent/mailpit/develop/install.sh)
 
-  (
-    sudo cat << 'EOF' | sudo tee /etc/systemd/system/mailpit.service
-[Unit]
-Description=Mailpit
-After=network.target
+  # Copy mailpit service file.
+  sudo cp /vagrant/resources/mailpit/mailpit.service /etc/systemd/system/mailpit.service
 
-[Service]
-User=vagrant
-ExecStart=/usr/bin/env /usr/local/bin/mailpit -- > /dev/null 2>&1 &
-
-[Install]
-WantedBy=multi-user.target
-EOF
-  )
-
+  # Restart mailpit service.
   sudo systemctl enable --now mailpit
 }
 

@@ -1,0 +1,10 @@
+[Unit]
+Description=Mailpit
+After=network.target
+
+[Service]
+User=vagrant
+ExecStart=/usr/bin/env /usr/local/bin/mailpit -- > /dev/null 2>&1 &
+
+[Install]
+WantedBy=multi-user.target

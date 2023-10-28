@@ -124,6 +124,7 @@ phpfpm_install() {
   sudo cp /vagrant/resources/php/custom-php.ini /etc/php/${PHPVERSION}/fpm/conf.d/php-custom.ini
   sudo cp /vagrant/resources/php/opcache.ini /etc/php/${PHPVERSION}/fpm/conf.d/opcache.ini
   sudo cp /vagrant/resources/php/mailpit.ini /etc/php/8.1/mods-available/mailpit.ini
+  sudo cp -f /vagrant/resources/php/xdebug.ini /etc/php/${PHPVERSION}/mods-available/xdebug.ini
 
   # sudo phpenmod custom-php
   sudo phpenmod mailpit

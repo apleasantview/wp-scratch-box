@@ -46,7 +46,7 @@ base_packages() {
     vim \
     zip
 
-  cp /home/vagrant/.profile /home/vagrant/.bash_profile
+  cp -f /home/vagrant/.profile /home/vagrant/.bash_profile
 }
 
 lamp_install() {
@@ -72,7 +72,7 @@ apache_configurations() {
   sudo a2enconf php${PHPVERSION}-fpm
   sudo service apache2 restart
 
-  sudo cp /vagrant/resources/apache/wp-scratch-box.conf /etc/apache2/sites-available/000-default.conf
+  sudo cp -f /vagrant/resources/apache/wp-scratch-box.conf /etc/apache2/sites-available/000-default.conf
   sudo service apache2 reload
 
   sudo usermod -a -G www-data vagrant
@@ -86,7 +86,7 @@ mariadb_install() {
   sudo curl -o /etc/apt/keyrings/mariadb-keyring.pgp 'https://mariadb.org/mariadb_release_signing_key.pgp'
 
   # Add source file.
-  sudo cp /vagrant/resources/mariadb/mariadb.sources /etc/apt/sources.list.d/mariadb.sources
+  sudo cp -f /vagrant/resources/mariadb/mariadb.sources /etc/apt/sources.list.d/mariadb.sources
 
   # Set default password.
   echo "maria-db-10.6 mysql-server/root_password password $root_password" | sudo debconf-set-selections
@@ -104,7 +104,7 @@ SQL
   sudo mysql -u root -proot -e "${revert_auth}"
 
   # Run MySQL without passwords for convenience.
-  cp /vagrant/resources/mariadb/my.cnf /home/vagrant/.my.cnf
+  cp -f /vagrant/resources/mariadb/my.cnf /home/vagrant/.my.cnf
 }
 
 phpfpm_install() {
@@ -119,12 +119,12 @@ phpfpm_install() {
     php${PHPVERSION}-ssh2 php${PHPVERSION}-xdebug php${PHPVERSION}-xml php${PHPVERSION}-xmlrpc php${PHPVERSION}-zip php-pear \
     php${PHPVERSION}-memcache php${PHPVERSION}-memcached
 
-  sudo cp /vagrant/resources/php/php-fpm.conf /etc/php/${PHPVERSION}/fpm/php-fpm.conf
-  sudo cp /vagrant/resources/php/pool-www.conf /etc/php/${PHPVERSION}/fpm/pool.d/www.conf
-  sudo cp /vagrant/resources/php/custom-php.ini /etc/php/${PHPVERSION}/fpm/conf.d/php-custom.ini
-  sudo cp /vagrant/resources/php/opcache.ini /etc/php/${PHPVERSION}/fpm/conf.d/opcache.ini
-  sudo cp /vagrant/resources/php/mailpit.ini /etc/php/8.1/mods-available/mailpit.ini
-  sudo cp -f /vagrant/resources/php/xdebug.ini /etc/php/${PHPVERSION}/mods-available/xdebug.ini
+  sudo cp -f /vagrant/resources/php/php-fpm.conf /etc/php/${PHPVERSION}/fpm/php-fpm.conf
+  sudo cp -f /vagrant/resources/php/pool-www.conf /etc/php/${PHPVERSION}/fpm/pool.d/www.conf
+  sudo cp -f /vagrant/resources/php/custom-php.ini /etc/php/${PHPVERSION}/fpm/conf.d/php-custom.ini
+  sudo cp -f /vagrant/resources/php/opcache.ini /etc/php/${PHPVERSION}/fpm/conf.d/opcache.ini
+  sudo cp -f /vagrant/resources/php/mailpit.ini /etc/php/8.1/mods-available/mailpit.ini
+  sudo cp -f -f /vagrant/resources/php/xdebug.ini /etc/php/${PHPVERSION}/mods-available/xdebug.ini
 
   # sudo phpenmod custom-php
   sudo phpenmod mailpit
@@ -141,7 +141,7 @@ memcached_install() {
   sudo apt-get update && sudo apt-get install -y -qq memcached
 
   # Copy memcached configuration.
-  sudo cp /vagrant/resources/memcached/memcached.conf /etc/memcached.conf
+  sudo cp -f /vagrant/resources/memcached/memcached.conf /etc/memcached.conf
 
   # Restart memcached service.
   sudo systemctl restart memcached
@@ -152,7 +152,7 @@ mailpit_install() {
   sudo bash < <(curl -sL https://raw.githubusercontent.com/axllent/mailpit/develop/install.sh)
 
   # Copy mailpit service file.
-  sudo cp /vagrant/resources/mailpit/mailpit.service /etc/systemd/system/mailpit.service
+  sudo cp -f /vagrant/resources/mailpit/mailpit.service /etc/systemd/system/mailpit.service
 
   # Restart mailpit service.
   sudo systemctl enable --now mailpit

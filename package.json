@@ -19,6 +19,6 @@
   "homepage": "https://github.com/apleasantview/wp-scratch-box#readme",
   "private": true,
   "dependencies": {
-    "commit-and-tag-version": "^10.1.0"
+    "commit-and-tag-version": "^11.3.0"
   }
 }

@@ -7,6 +7,7 @@
       "box_hostname": "wp-scratch-box.test",
       "vb_cpus": "2",
       "vb_memory": "2048",
+      "vb_boot_timeout": 420,
       "vb_linked_clone": "true",
       "synced_folder": {
         "host_path": "src/",

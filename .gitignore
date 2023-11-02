@@ -10,6 +10,7 @@ content/
 project/
 src/
 temp/
+public_html/
 
 # Common project files
 database/*.sql

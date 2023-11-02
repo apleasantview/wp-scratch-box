@@ -10,8 +10,8 @@
       "vb_boot_timeout": 420,
       "vb_linked_clone": "true",
       "synced_folder": {
-        "host_path": "src/",
-        "guest_path": "/var/www/public"
+        "host_path": "public_html/",
+        "guest_path": "/var/www/public_html"
       }
     },
     "wordpress": {

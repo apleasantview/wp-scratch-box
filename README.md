@@ -96,7 +96,7 @@ Vagrant configuration can be modified in `Vagrant.json`, inside the `vagrant` ob
 | "synced_folder" | path |
 | --------------- |:----:|
 | "host_path" | "src/" |
-| "guest_path" | "/var/www/public" |
+| "guest_path" | "/var/www/public_html" |
 
 Vagrant will create the `host_path` folder if it doesn't exist. The root directory will be synced to `/vagrant` per Vagrants' defaults, giving you access to any other folders and files needed. Note that there is no '/' at the end of the `guest_path`.
 

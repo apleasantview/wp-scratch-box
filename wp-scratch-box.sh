@@ -27,7 +27,7 @@ main() {
     then
       echo "Symlink exists."
     else
-      ln -s /var/www/public/ public
+      ln -s /var/www/public_html/ public_html
   fi
   # set +x
 }
@@ -199,7 +199,7 @@ wordpress() {
     wp_custom[$key]="$value";
   done < <(echo "$parser")
 
-  local root_directory=${wp_custom[root_directory]:-public}
+  local root_directory=${wp_custom[root_directory]:-public_html}
   local core_directory=${wp_custom[core_directory]:-.}
   local mysql_database=${wp_custom[mysql_database]:-wp_dummy}
   local mysql_user=${wp_custom[mysql_user]:-wp}

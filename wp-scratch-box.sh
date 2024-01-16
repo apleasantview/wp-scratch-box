@@ -11,7 +11,7 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-PHPVERSION=${PHPVERSION:-"8.1"}
+PHPVERSION=${PHPVERSION:-"8.2"}
 
 main() {
   # set -x
@@ -123,7 +123,7 @@ phpfpm_install() {
   sudo cp -f /vagrant/resources/php/pool-www.conf /etc/php/${PHPVERSION}/fpm/pool.d/www.conf
   sudo cp -f /vagrant/resources/php/custom-php.ini /etc/php/${PHPVERSION}/fpm/conf.d/php-custom.ini
   sudo cp -f /vagrant/resources/php/opcache.ini /etc/php/${PHPVERSION}/fpm/conf.d/opcache.ini
-  sudo cp -f /vagrant/resources/php/mailpit.ini /etc/php/8.1/mods-available/mailpit.ini
+  sudo cp -f /vagrant/resources/php/mailpit.ini /etc/php/${PHPVERSION}/mods-available/mailpit.ini
   sudo cp -f /vagrant/resources/php/xdebug.ini /etc/php/${PHPVERSION}/mods-available/xdebug.ini
 
   # sudo phpenmod custom-php

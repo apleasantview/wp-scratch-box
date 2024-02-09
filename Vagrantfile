@@ -11,6 +11,7 @@ alt_box = parser.has_key?("Custom")
 ENV["LC_ALL"] = "en_US.UTF-8"
 
 Vagrant.configure("2") do |config|
+  config.vm.box_check_update = false
   config.ssh.forward_agent = true
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
   config.vm.define set['vagrant']['name'] do |project|

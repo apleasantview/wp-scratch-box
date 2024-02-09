@@ -36,7 +36,7 @@ Vagrant.configure("2") do |config|
       vb.linked_clone = set['vagrant']['vb_linked_clone']
     end
     project.vm.synced_folder set['vagrant']['synced_folder']['host_path'], set['vagrant']['synced_folder']['guest_path'],
-      create: true, owner: "vagrant", group: "www-data", :mount_options => ['dmode=775', 'fmode=664']
+      create: true, owner: "vagrant", group: "www-data", :mount_options => ['dmode=775', 'fmode=774']
     project.vm.provision "shell", path: "wp-scratch-box.sh", privileged: false
   end
 

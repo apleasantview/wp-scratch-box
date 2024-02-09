@@ -29,6 +29,10 @@ Vagrant.configure("2") do |config|
       vb.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
       vb.customize ['modifyvm', :id, '--ostype', 'Ubuntu_64']
       vb.customize ['modifyvm', :id, '--cableconnected1', 'on']
+
+      vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate//v-root", "1"]
+      vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate//#{set['vagrant']['synced_folder']['guest_path']}", "1"]
+
       vb.linked_clone = set['vagrant']['vb_linked_clone']
     end
     project.vm.synced_folder set['vagrant']['synced_folder']['host_path'], set['vagrant']['synced_folder']['guest_path'],
